@@ -51,7 +51,7 @@ export default {
             'THe 95 Star is a web application for pick and drop services. Customers can make reservations, while the admin has the ability to manage reservations, discount codes, cars, surges, static pages, and configure home page messages.',
           responsibilites:
             'I contributed as full stack developer | Vue.js, Node.js <br><br> I made significant contributions to the project by working on change requests for clients.  In addition to addressing client requirements, I focused on ensuring application security by creating robust APIs and implementing appropriate security measures.',
-          duration: 'September 2021 - current',
+          duration: 'September 2022 - current',
           image: 'home2.jpeg',
           githubLink: 'https://github.com/isajjadali/the-95-star',
           projectLink: 'https://www.the95star.com',
@@ -62,7 +62,7 @@ export default {
             'The app features a user community where users can follow each other and stay updated on reading activities. Users can maintain a status for each book, indicating whether they have read it, are currently reading it, or are interested in reading it.',
           responsibilites:
             'Worked on this project as Full Stack Developer | Vue.js Node.js <br><br> Through my expertise in these technologies, I successfully integrated frontend functionality with backend APIs, ensuring seamless communication and a smooth user experience. ',
-          duration: 'September 2021 - current',
+          duration: 'September 2022 - December 2022',
           image: 'Bookee-Home.png',
           githubLink:
             'https://github.com/mJawadHaider/DSA-project-Bookee',
@@ -77,8 +77,8 @@ export default {
             'Budget Manager is a web app for construction companies, streamlining budget management, project funding, and e-invoice generation for customers.',
           responsibilites:
             'As a frontend developer, I was responsible for developing the complete frontend of the application using Vuetify and Vue.js. I utilized the power of these frameworks to create a visually appealing and user-friendly interface for seamless user interactions.',
-          duration: 'April 2021 - September',
-          image: 'home2.jpeg',
+          duration: 'April 2022 - September 2022',
+          image: 'BM.png',
           githubLink:
             'https://github.com/isajjadali/budget-manager-v3',
           projectLink: '',

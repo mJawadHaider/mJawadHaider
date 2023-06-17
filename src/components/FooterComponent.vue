@@ -9,7 +9,7 @@
       titleColor="#a2a2a2"
       icon="mdi-email-open"
       iconColor="#a2a2a2"
-      :lineStyling="{ width: '119px', color: 'white' }"
+      :lineStyling="{ width: '200px', color: 'white' }"
     />
 
     <v-col

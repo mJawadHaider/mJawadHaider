@@ -134,7 +134,7 @@ export default {
         {
           position: 'Software Engineer Intern',
           company: 'House Of Tech',
-          duration: '2021 - current',
+          duration: '2022 - current',
         },
       ],
       skillSet: [
