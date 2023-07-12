@@ -5,7 +5,6 @@
     style="max-width: 100vw"
   >
     <v-row justify="center" class="main-wrapper">
-      
       <section-header
         title="Projects"
         icon="mdi-briefcase"
@@ -53,7 +52,6 @@ export default {
             'I contributed as full stack developer | Vue.js, Node.js <br><br> I made significant contributions to the project by working on change requests for clients.  In addition to addressing client requirements, I focused on ensuring application security by creating robust APIs and implementing appropriate security measures.',
           duration: 'September 2022 - current',
           image: 'the95Star.png',
-          githubLink: 'https://github.com/isajjadali/the-95-star',
           projectLink: 'https://www.the95star.com',
         },
         {
@@ -67,7 +65,6 @@ export default {
           image: 'Bookee-Home.png',
           githubLink:
             'https://github.com/mJawadHaider/DSA-project-Bookee',
-          projectLink: '',
         },
         {
           icon: 'budgetManager.png',
@@ -82,7 +79,6 @@ export default {
           image: 'BM.png',
           githubLink:
             'https://github.com/isajjadali/budget-manager-v3',
-          projectLink: '',
         },
       ],
     };

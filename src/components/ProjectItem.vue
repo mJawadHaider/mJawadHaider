@@ -36,7 +36,7 @@
       </span>
     </div>
     <div
-      :class="$vuetify.display.smAndDown ? 'mt-5' : ''"
+      :class="$vuetify.display.smAndDown ? 'mt-5' : 'mt-7'"
       class="d-flex flex-column justify-center"
       style="max-width: 550px; max-height: 255px"
       :style="$vuetify.display.smAndDown ? 'padding-right: 5px' : ''"

@@ -67,8 +67,9 @@
           <span
             class="d-flex justify-center"
             style="font-size: 12px; margin-top: -4px"
-            >{{ button.tooltipText }}</span
           >
+            {{ button.tooltipText }}
+          </span>
         </v-tooltip>
       </div>
     </v-col>
