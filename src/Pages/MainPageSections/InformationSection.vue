@@ -24,7 +24,7 @@
       </span>
       <span class="name"> Muhammad Jawad Haider </span>
       <span class="about">
-        Software Engineer | Sophomore at UET
+        Web Developer | Sophomore at UET
       </span>
       <!-- <span class="email"> jhaider869@gmail.com </span> -->
 

@@ -1,7 +1,7 @@
 <template>
   <v-col
     cols="10"
-    class="py-13 ma-0"
+    class="py-13 ma-0 mb-5 align-center"
     :class="$vuetify.display.smAndDown ? 'px-1' : 'd-flex'"
     style="max-width: 100svw"
   >
@@ -38,13 +38,43 @@
     <div
       :class="$vuetify.display.smAndDown ? 'mt-5' : ''"
       class="d-flex flex-column justify-center"
-      style="max-width: 550px;"
+      style="max-width: 550px; max-height: 255px"
       :style="$vuetify.display.smAndDown ? 'padding-right: 5px' : ''"
     >
-      <img
+      <v-img
         class="project-picture"
+        style="cursor: pointer"
+        :style="
+          isImageLoading && $vuetify.display.mdAndUp
+            ? 'min-width: 550px'
+            : ''
+        "
         :src="require(`@/assets/${project.image}`)"
-      />
+        :lazy-src="require(`@/assets/${project.image}`)"
+        @click="dialog = true"
+        @load="isImageLoading = false"
+      >
+        <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
+      <v-dialog v-model="dialog" width="900">
+        <v-img
+          class="project-picture"
+          style="box-shadow: 1px 1px 25px"
+          :src="require(`@/assets/${project.image}`)"
+          @click="dialog = false"
+        />
+      </v-dialog>
       <div class="mt-9 d-flex justify-center">
         <v-btn
           v-if="project.githubLink"
@@ -91,7 +121,10 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      dialog: false,
+      isImageLoading: true,
+    };
   },
 };
 </script>
@@ -104,8 +137,7 @@ export default {
 
 .project-picture {
   object-fit: cover;
-  /* width: 550px; */
-  width: 100%;  
+  width: 100%;
   border: 1px solid #7a7a7a;
   box-shadow: 5px 4px 9px;
 }

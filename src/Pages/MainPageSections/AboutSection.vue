@@ -2,7 +2,11 @@
   <div
     ref="animatedElement"
     class="fading mt-3"
-    style="box-shadow: 1px 1px 8px; background-color: whitesmoke; padding-bottom: 60px;"
+    style="
+      box-shadow: 1px 1px 8px;
+      background-color: whitesmoke;
+      padding-bottom: 60px;
+    "
   >
     <v-row
       class="about-row"
@@ -36,11 +40,17 @@
           </p>
           <div
             v-if="index + 1 !== education.length"
-            class="my-4 seperator"
+            class="my-6 seperator"
           ></div>
         </div>
 
-        <h1 style="color: #473a3a" class="mt-10">Experience</h1>
+        <h1
+          v-if="experience?.length"
+          style="color: #473a3a"
+          class="mt-10"
+        >
+          Experience
+        </h1>
         <div v-for="(item, index) in experience" :key="index">
           <p
             class="education-item mt-4"
@@ -85,12 +95,13 @@
           </v-col>
         </v-row>
       </v-col>
+      <!-- Download Resume -->
       <v-col
         cols="12"
         md="10"
         sm="12"
         :class="$vuetify.display.smAndDown ? 'mt-13' : 'py-0'"
-        class="d-flex justify-end"
+        class="d-flex justify-end mt-5"
       >
         <v-btn
           class="text-white"
@@ -131,11 +142,11 @@ export default {
         },
       ],
       experience: [
-        {
-          position: 'Software Engineer Intern',
-          company: 'House Of Tech',
-          duration: '2022 - current',
-        },
+        // {
+        //   position: 'Software Engineer Intern',
+        //   company: 'House Of Tech',
+        //   duration: '2022 - current',
+        // },
       ],
       skillSet: [
         {
@@ -144,11 +155,11 @@ export default {
         },
         {
           name: 'Node.js',
-          skillPower: 60,
+          skillPower: 50,
         },
         {
           name: 'Sequelize.js',
-          skillPower: 70,
+          skillPower: 65,
         },
         {
           name: 'C++ / C#',

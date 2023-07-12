@@ -46,18 +46,19 @@ export default {
           icon: '95star.png',
           iconSize: '30px',
           name: 'The 95 Stars - Pick & Drop Service',
-          atCompany: 'House of Tech',
+          atCompany: 'Contributor',
           description:
             'THe 95 Star is a web application for pick and drop services. Customers can make reservations, while the admin has the ability to manage reservations, discount codes, cars, surges, static pages, and configure home page messages.',
           responsibilites:
             'I contributed as full stack developer | Vue.js, Node.js <br><br> I made significant contributions to the project by working on change requests for clients.  In addition to addressing client requirements, I focused on ensuring application security by creating robust APIs and implementing appropriate security measures.',
           duration: 'September 2022 - current',
-          image: 'home2.jpeg',
+          image: 'the95Star.png',
           githubLink: 'https://github.com/isajjadali/the-95-star',
           projectLink: 'https://www.the95star.com',
         },
         {
           name: 'Bookee - Web based Book Management Application',
+          atCompany: 'Creator',
           description:
             'The app features a user community where users can follow each other and stay updated on reading activities. Users can maintain a status for each book, indicating whether they have read it, are currently reading it, or are interested in reading it.',
           responsibilites:
@@ -72,7 +73,7 @@ export default {
           icon: 'budgetManager.png',
           iconSize: '22px',
           name: 'Budget Manager',
-          atCompany: 'House of Tech',
+          atCompany: 'Contributor',
           description:
             'Budget Manager is a web app for construction companies, streamlining budget management, project funding, and e-invoice generation for customers.',
           responsibilites:
