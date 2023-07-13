@@ -37,11 +37,80 @@
     </div>
     <div
       :class="$vuetify.display.smAndDown ? 'mt-5' : 'mt-7'"
-      class="d-flex flex-column justify-center"
-      style="max-width: 550px; max-height: 255px"
+      class="d-flex flex-column justify-center align-center"
+      style="max-width: 550px"
       :style="$vuetify.display.smAndDown ? 'padding-right: 5px' : ''"
     >
+      <v-carousel
+        v-if="project.pictures.length !== 1"
+        v-model="carouselIndex"
+        cycle
+        height="260"
+        hide-delimiters
+        show-arrows-on-hover
+        style="box-shadow: 5px 4px 9px"
+      >
+        <template v-slot:prev="{ props }">
+          <v-btn
+            size="30"
+            color="white"
+            style="margin-left: -10px"
+            icon
+            @click="props.onClick"
+          >
+            <v-icon color="brown-darken-3">
+              mdi-arrow-left-drop-circle-outline
+            </v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:next="{ props }">
+          <v-btn
+            size="30"
+            color="white"
+            style="margin-right: -10px"
+            icon
+            @click="props.onClick"
+          >
+            <v-icon color="brown-darken-3">
+              mdi-arrow-right-drop-circle-outline
+            </v-icon>
+          </v-btn>
+        </template>
+        <v-carousel-item
+          v-for="(slidePic, index) in project.pictures"
+          :key="index"
+          class="fill-height"
+        >
+          <v-img
+            class="project-picture"
+            style="cursor: pointer"
+            :style="
+              $vuetify.display.mdAndUp
+                ? 'min-width: 550px'
+                : ''
+            "
+            :src="require(`@/assets/${slidePic}`)"
+            :lazy-src="require(`@/assets/${slidePic}`)"
+            @click="openImgDialog"
+            @load="isImageLoading = false"
+          >
+            <template v-slot:placeholder>
+              <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+              >
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-carousel-item>
+      </v-carousel>
       <v-img
+        v-else
         class="project-picture"
         style="cursor: pointer"
         :style="
@@ -49,9 +118,9 @@
             ? 'min-width: 550px'
             : ''
         "
-        :src="require(`@/assets/${project.image}`)"
-        :lazy-src="require(`@/assets/${project.image}`)"
-        @click="dialog = true"
+        :src="require(`@/assets/${project.pictures[0]}`)"
+        :lazy-src="require(`@/assets/${project.pictures[0]}`)"
+        @click="openImgDialog"
         @load="isImageLoading = false"
       >
         <template v-slot:placeholder>
@@ -67,14 +136,7 @@
           </v-row>
         </template>
       </v-img>
-      <v-dialog v-model="dialog" width="900">
-        <v-img
-          class="project-picture"
-          style="box-shadow: 1px 1px 25px"
-          :src="require(`@/assets/${project.image}`)"
-          @click="dialog = false"
-        />
-      </v-dialog>
+
       <div class="mt-9 d-flex justify-center">
         <v-btn
           v-if="project.githubLink"
@@ -105,6 +167,14 @@
         </v-btn>
       </div>
     </div>
+    <v-dialog v-model="isImgDialogOpen" width="900">
+      <v-img
+        class="project-picture"
+        style="box-shadow: 1px 1px 25px"
+        :src="require(`@/assets/${project.pictures[carouselIndex]}`)"
+        @click="isImgDialogOpen = false"
+      />
+    </v-dialog>
   </v-col>
 </template>
 
@@ -122,9 +192,17 @@ export default {
   },
   data() {
     return {
-      dialog: false,
+      isImgDialogOpen: false,
       isImageLoading: true,
+      carouselIndex: 0,
     };
+  },
+  methods: {
+    openImgDialog() {
+      if (this.$vuetify.display.mdAndUp) {
+        this.isImgDialogOpen = true;
+      }
+    },
   },
 };
 </script>
@@ -138,7 +216,8 @@ export default {
 .project-picture {
   object-fit: cover;
   width: 100%;
-  border: 1px solid #7a7a7a;
+  height: 100%;
+  /* border: 1px solid #7a7a7a; */
   box-shadow: 5px 4px 9px;
 }
 </style>

@@ -53,6 +53,12 @@ export default {
           duration: 'September 2022 - current',
           image: 'the95Star.png',
           projectLink: 'https://www.the95star.com',
+          pictures: [
+            'the95Star.png',
+            '95Star1.png',
+            '95Star2.png',
+            '95Star3.png',
+          ],
         },
         {
           name: 'Bookee - Web based Book Management Application',
@@ -65,6 +71,7 @@ export default {
           image: 'Bookee-Home.png',
           githubLink:
             'https://github.com/mJawadHaider/DSA-project-Bookee',
+          pictures: ['Bookee-Home.png', 'Bookee2.png'],
         },
         {
           icon: 'budgetManager.png',
@@ -79,6 +86,7 @@ export default {
           image: 'BM.png',
           githubLink:
             'https://github.com/isajjadali/budget-manager-v3',
+          pictures: ['BM.png', 'BM1.png', 'BM2.png'],
         },
       ],
     };
