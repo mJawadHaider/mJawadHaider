@@ -4,7 +4,10 @@
     class="fading-div"
     style="max-width: 100vw"
   >
-    <v-row justify="center" class="main-wrapper">
+    <v-row
+      justify="center"
+      class="main-wrapper"
+    >
       <section-header
         title="Projects"
         icon="mdi-briefcase"
@@ -17,13 +20,15 @@
         v-for="(project, index) in projects"
         :key="index"
         class="d-flex justify-center"
-        :style="`width: 100%; ${
-          index % 2 === 0
+        :style="`width: 100%; ${index % 2 === 0
             ? ''
             : 'background-color: white; box-shadow: 1px 1px 8px;'
-        }`"
+          }`"
       >
-        <project-item :project="project" :index="index" />
+        <project-item
+          :project="project"
+          :index="index"
+        />
       </div>
     </v-row>
   </div>
@@ -127,5 +132,4 @@ export default {
 .visible-div {
   opacity: 1;
   transform: translateY(0);
-}
-</style>
+}</style>

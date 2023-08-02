@@ -17,11 +17,21 @@
     class="py-0 d-flex align-center justify-center"
     style="max-height: 52px"
   >
-    <hr style="width: 275px; color: white" :style="lineStyling" />
-    <v-icon class="mx-3" :color="iconColor" size="25">
+    <hr
+      style="width: 275px; color: white"
+      :style="lineStyling"
+    />
+    <v-icon
+      class="mx-3"
+      :color="iconColor"
+      size="25"
+    >
       {{ icon }}
     </v-icon>
-    <hr style="width: 275px; color: white" :style="lineStyling" />
+    <hr
+      style="width: 275px; color: white"
+      :style="lineStyling"
+    />
   </v-col>
 </template>
 
@@ -46,12 +56,12 @@ export default {
     },
     lineStyling: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     titleStyling: {
       type: String,
       default: () => '',
-    }
+    },
   },
 };
 </script>

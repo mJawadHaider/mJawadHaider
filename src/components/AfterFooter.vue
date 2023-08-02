@@ -9,11 +9,16 @@
     class="align-center ma-0"
     justify="center"
   >
-    <v-col cols="7" class="pa-0">
-      <v-icon color="#a2a2a2" icon="mdi-wrench-outline" />
+    <v-col
+      cols="7"
+      class="pa-0"
+    >
+      <v-icon
+        color="#a2a2a2"
+        icon="mdi-wrench-outline"
+      />
       <span style="font-family: 'Roboto Condensed', sans-serif">
-        by Jawad</span
-      >
+        by Jawad</span>
     </v-col>
   </v-row>
 </template>

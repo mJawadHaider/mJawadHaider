@@ -22,7 +22,11 @@
       <h3>Email:</h3>
 
       <span class="mt-3">
-        <v-icon icon="mdi-email" size="small" class="mr-1" />
+        <v-icon
+          icon="mdi-email"
+          size="small"
+          class="mr-1"
+        />
         <span
           @click="routeToLink('mailto:jhaider869@gmail.com')"
           style="cursor: pointer; text-decoration: underline"
@@ -59,7 +63,11 @@
               elevation="4"
               @click="routeToLink(button.link)"
             >
-              <v-icon color="#a2a2a2" v-bind="button" size="x-large">
+              <v-icon
+                color="#a2a2a2"
+                v-bind="button"
+                size="x-large"
+              >
                 {{ button.icon }}
               </v-icon>
             </v-btn>

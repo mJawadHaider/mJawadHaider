@@ -16,17 +16,18 @@
           :src="require(`../assets/${project.icon}`)"
           class="mr-1"
         ></v-img>
-        <span class="">
+        <span>
           {{ project.name }}
-          {{
-            `${project.atCompany ? ` | ${project.atCompany}` : ''}`
-          }}
+          {{ project.atCompany ? ` | ${project.atCompany}` : '' }}
         </span>
       </div>
       <span class="project-item">
         <p>{{ project.duration }}</p>
         <h4 class="mt-10">Description:</h4>
-        <p class="mt-2 text-justify" v-html="project.description" />
+        <p
+          class="mt-2 text-justify"
+          v-html="project.description"
+        />
 
         <h4 class="mt-10">Responsibilites:</h4>
         <p
@@ -47,11 +48,12 @@
         cycle
         height="260"
         hide-delimiters
-        show-arrows-on-hover
+        show-arrows="hover"
         style="box-shadow: 5px 4px 9px"
       >
         <template v-slot:prev="{ props }">
           <v-btn
+            v-bind="props"
             size="30"
             color="white"
             style="margin-left: -10px"
@@ -65,6 +67,7 @@
         </template>
         <template v-slot:next="{ props }">
           <v-btn
+            v-bind="props"
             size="30"
             color="white"
             style="margin-right: -10px"
@@ -84,11 +87,8 @@
           <v-img
             class="project-picture"
             style="cursor: pointer"
-            :style="
-              $vuetify.display.mdAndUp
-                ? 'min-width: 550px'
-                : ''
-            "
+            :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''
+              "
             :src="require(`@/assets/${slidePic}`)"
             :lazy-src="require(`@/assets/${slidePic}`)"
             @click="openImgDialog"
@@ -113,11 +113,7 @@
         v-else
         class="project-picture"
         style="cursor: pointer"
-        :style="
-          isImageLoading && $vuetify.display.mdAndUp
-            ? 'min-width: 550px'
-            : ''
-        "
+        :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
         :src="require(`@/assets/${project.pictures[0]}`)"
         :lazy-src="require(`@/assets/${project.pictures[0]}`)"
         @click="openImgDialog"
@@ -167,13 +163,100 @@
         </v-btn>
       </div>
     </div>
-    <v-dialog v-model="isImgDialogOpen" width="900">
+    <v-dialog
+      v-model="isImgDialogOpen"
+      width="900"
+    >
+      <v-carousel
+        v-if="project.pictures.length !== 1"
+        v-model="carouselIndex"
+        cycle
+        height="420"
+        hide-delimiters
+        show-arrows="hover"
+        style="box-shadow: 5px 4px 9px"
+      >
+        <template v-slot:prev="{ props }">
+          <v-btn
+            v-bind="props"
+            size="30"
+            color="white"
+            style="margin-left: -10px"
+            icon
+            @click="props.onClick"
+          >
+            <v-icon color="brown-darken-3">
+              mdi-arrow-left-drop-circle-outline
+            </v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:next="{ props }">
+          <v-btn
+            v-bind="props"
+            size="30"
+            color="white"
+            style="margin-right: -10px"
+            icon
+            @click="props.onClick"
+          >
+            <v-icon color="brown-darken-3">
+              mdi-arrow-right-drop-circle-outline
+            </v-icon>
+          </v-btn>
+        </template>
+        <v-carousel-item
+          v-for="(slidePic, index) in project.pictures"
+          :key="index"
+          class="fill-height"
+        >
+          <v-img
+            class="project-picture"
+            style="cursor: pointer"
+            :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''
+              "
+            :src="require(`@/assets/${slidePic}`)"
+            :lazy-src="require(`@/assets/${slidePic}`)"
+            @click="openImgDialog"
+            @load="isImageLoading = false"
+          >
+            <template v-slot:placeholder>
+              <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+              >
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-carousel-item>
+      </v-carousel>
       <v-img
+        v-else
         class="project-picture"
-        style="box-shadow: 1px 1px 25px"
-        :src="require(`@/assets/${project.pictures[carouselIndex]}`)"
-        @click="isImgDialogOpen = false"
-      />
+        style="cursor: pointer"
+        :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
+        :src="require(`@/assets/${project.pictures[0]}`)"
+        :lazy-src="require(`@/assets/${project.pictures[0]}`)"
+        @click="openImgDialog"
+        @load="isImageLoading = false"
+      >
+        <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
     </v-dialog>
   </v-col>
 </template>
@@ -183,7 +266,7 @@ export default {
   props: {
     project: {
       type: Object,
-      default: {},
+      default: () => { },
     },
     index: {
       type: Number,
@@ -200,7 +283,7 @@ export default {
   methods: {
     openImgDialog() {
       if (this.$vuetify.display.mdAndUp) {
-        this.isImgDialogOpen = true;
+        this.isImgDialogOpen = !this.isImgDialogOpen;
       }
     },
   },
@@ -219,5 +302,4 @@ export default {
   height: 100%;
   /* border: 1px solid #7a7a7a; */
   box-shadow: 5px 4px 9px;
-}
-</style>
+}</style>

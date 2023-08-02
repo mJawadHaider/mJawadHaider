@@ -21,9 +21,16 @@
         :titleStyling="$vuetify.display.smAndDown ? 'mt-16' : 'mt-10'"
       />
       <!-- Education & Experience -->
-      <v-col cols="12" md="5" sm="12">
+      <v-col
+        cols="12"
+        md="5"
+        sm="12"
+      >
         <h1 style="color: #473a3a">Education</h1>
-        <div v-for="(item, index) in education" :key="index">
+        <div
+          v-for="(item, index) in education"
+          :key="index"
+        >
           <p
             class="education-item mt-4"
             style="font-size: large; font-weight: bold"
@@ -31,11 +38,17 @@
             {{ item.degree }}
           </p>
           <p class="education-item">
-            <v-icon size="24" class="mr-1"> mdi-school </v-icon>
+            <v-icon
+              size="24"
+              class="mr-1"
+            > mdi-school </v-icon>
             {{ item.institute }}
           </p>
           <p class="education-item">
-            <v-icon size="22" class="mr-1">mdi-calendar-blank</v-icon>
+            <v-icon
+              size="22"
+              class="mr-1"
+            >mdi-calendar-blank</v-icon>
             {{ item.duration }}
           </p>
           <div
@@ -51,7 +64,10 @@
         >
           Experience
         </h1>
-        <div v-for="(item, index) in experience" :key="index">
+        <div
+          v-for="(item, index) in experience"
+          :key="index"
+        >
           <p
             class="education-item mt-4"
             style="font-size: large; font-weight: bold"
@@ -62,7 +78,10 @@
             {{ item.company }}
           </p>
           <p class="education-item">
-            <v-icon size="22" class="mr-1">mdi-calendar-blank</v-icon>
+            <v-icon
+              size="22"
+              class="mr-1"
+            >mdi-calendar-blank</v-icon>
             {{ item.duration }}
           </p>
           <div
@@ -72,14 +91,23 @@
         </div>
       </v-col>
       <!-- Skills -->
-      <v-col cols="12" md="5" sm="12">
+      <v-col
+        cols="12"
+        md="5"
+        sm="12"
+      >
         <h1 style="color: #473a3a">Skills</h1>
         <v-row
           v-for="(item, index) in skillSet"
           :key="index"
           class="d-flex align-center justify-center"
         >
-          <v-col cols="12" md="3" sm="12" class="py-0 pr-0">
+          <v-col
+            cols="12"
+            md="3"
+            sm="12"
+            class="py-0 pr-0"
+          >
             <p
               class="education-item mt-4"
               style="font-size: medium; font-weight: bold"
@@ -87,7 +115,12 @@
               {{ item.name }}
             </p>
           </v-col>
-          <v-col cols="10" md="9" sm="10" class="pa-0">
+          <v-col
+            cols="10"
+            md="9"
+            sm="10"
+            class="pa-0"
+          >
             <v-progress-linear
               v-model="item.skillPower"
               class="mt-4"
@@ -113,7 +146,7 @@
             routeToLink(
               'https://drive.google.com/file/d/1GAgYJ595LXol3Dq1WkuUEouB1ZqeSLA9/view?usp=sharing'
             )
-          "
+            "
         >
           DOWNLOAD RESUME
         </v-btn>

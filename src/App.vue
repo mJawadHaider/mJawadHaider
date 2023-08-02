@@ -1,8 +1,15 @@
 <template>
-  <v-app style="background-color: #a2a2a2;">
-    <app-bar  />
+  <v-app style="background-color: #a2a2a2">
+    <app-bar
+      id="appBarId"
+      :tabs="tabs"
+      @toggleNavigationDrawer="toggleNavigationDrawer"
+    />
     <v-main class="main-container">
-      <main-page />
+      <main-page
+        :isSnackBarDisabled="disbaleSnackbar"
+        @toggleTabIndex="toggleTabIndex"
+      />
     </v-main>
   </v-app>
 </template>
@@ -17,10 +24,58 @@ export default {
     AppBar,
     MainPage,
   },
+  data: () => {
+    return {
+      activeTabIndex: 0,
+      disbaleSnackbar: false,
+    };
+  },
+  computed: {
+    tabs() {
+      const appBarButtons = [
+        {
+          title: 'Home',
+          componentId: '',
+          isActive: true,
+        },
+        {
+          title: 'About Me',
+          block: 'center',
+          componentId: 'aboutSectionId',
+          isActive: false,
+        },
+        {
+          title: 'Projects',
+          block: 'start',
+          componentId: 'projectSectionId',
+          isActive: false,
+        },
+        {
+          title: 'Contact Me',
+          componentId: 'footerSectionId',
+          isActive: false,
+        },
+      ];
+      return appBarButtons.map((tab, index) =>
+        index === this.activeTabIndex
+          ? { ...tab, isActive: true }
+          : { ...tab, isActive: false }
+      );
+    },
+  },
+  methods: {
+    toggleTabIndex(index) {
+      this.activeTabIndex = index || 0;
+    },
+    toggleNavigationDrawer(toggle) {
+      document.documentElement.style.overflow = toggle
+        ? 'hidden'
+        : '';
+      this.disbaleSnackbar = toggle;
+    },
+  },
   created() {
     document.title = 'Jawad Haider';
-  },
-  mounted() {
   },
 };
 </script>
@@ -34,8 +89,9 @@ export default {
 }
 
 .v-btn,
-.v-tab {
-  text-transform: capitalize !important;
+.v-tab,
+.upper-case {
+  text-transform: uppercase !important;
 }
 
 .main-container {
@@ -46,6 +102,7 @@ export default {
     overflow: hidden;
   }
 }
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
   display: none;
@@ -53,8 +110,10 @@ body::-webkit-scrollbar {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* width */
@@ -76,6 +135,4 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-</style>
+}</style>

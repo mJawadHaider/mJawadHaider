@@ -1,31 +1,29 @@
 <template>
   <v-row
     :class="$vuetify.display.smAndDown ? 'pl-8 pr-4' : 'px-12'"
+    class="pt-8"
     style="max-width: 100vw"
   >
     <v-col
       cols="12"
       md="7"
       sm="12"
-      :class="
-        $vuetify.display.smAndDown ? 'left-pane pa-0' : 'left-pane'
-      "
+      :class="$vuetify.display.smAndDown ? 'left-pane pa-0' : 'left-pane'
+        "
+      class="pt-13"
     >
       <span
         class="greetings"
         style="color: #2c1f1f"
-        :style="
-          $vuetify.display.smAndDown
+        :style="$vuetify.display.smAndDown
             ? 'margin-top: 50px'
             : 'margin-top: 110px'
-        "
+          "
       >
         Hey there! I'm
       </span>
       <span class="name"> Muhammad Jawad Haider </span>
-      <span class="about">
-        Web Developer | Sophomore at UET
-      </span>
+      <span class="about"> Web Developer | Sophomore at UET </span>
       <!-- <span class="email"> jhaider869@gmail.com </span> -->
 
       <div
@@ -52,9 +50,8 @@
       cols="12"
       md="5"
       sm="12"
-      :class="
-        $vuetify.display.smAndDown ? 'pa-0 mt-10' : 'picture-box pa-0'
-      "
+      :class="$vuetify.display.smAndDown ? 'pa-0 mt-10' : 'picture-box pa-0'
+        "
     >
       <v-img
         class="picture"
