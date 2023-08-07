@@ -2,7 +2,7 @@
   <v-row
     :class="$vuetify.display.smAndDown ? 'pl-8 pr-4' : 'px-12'"
     class="pt-8"
-    style="max-width: 100vw"
+    style="max-width: 100vw; margin-top: 48px;"
   >
     <v-col
       cols="12"

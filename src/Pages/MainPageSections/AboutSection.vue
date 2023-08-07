@@ -26,6 +26,40 @@
         md="5"
         sm="12"
       >
+        <h1
+          v-if="experience?.length"
+          style="color: #473a3a"
+        >
+          Experience
+        </h1>
+        <div
+          v-for="(item, index) in experience"
+          :key="index"
+          class="mb-6"
+        >
+          <p
+            class="education-item mt-4"
+            style="font-size: large; font-weight: bold"
+          >
+            {{ item.position }}
+          </p>
+          <p class="education-item">
+            {{ item.company }}
+          </p>
+          <p class="education-item">
+            <v-icon
+              size="22"
+              class="mr-1"
+            >mdi-calendar-blank</v-icon>
+            {{ item.duration }}
+          </p>
+          <div
+            v-if="index + 1 !== experience.length"
+            class="my-4 seperator"
+          ></div>
+        </div>
+
+
         <h1 style="color: #473a3a">Education</h1>
         <div
           v-for="(item, index) in education"
@@ -54,39 +88,6 @@
           <div
             v-if="index + 1 !== education.length"
             class="my-6 seperator"
-          ></div>
-        </div>
-
-        <h1
-          v-if="experience?.length"
-          style="color: #473a3a"
-          class="mt-10"
-        >
-          Experience
-        </h1>
-        <div
-          v-for="(item, index) in experience"
-          :key="index"
-        >
-          <p
-            class="education-item mt-4"
-            style="font-size: large; font-weight: bold"
-          >
-            {{ item.position }}
-          </p>
-          <p class="education-item">
-            {{ item.company }}
-          </p>
-          <p class="education-item">
-            <v-icon
-              size="22"
-              class="mr-1"
-            >mdi-calendar-blank</v-icon>
-            {{ item.duration }}
-          </p>
-          <div
-            v-if="index + 1 !== experience.length"
-            class="my-4 seperator"
           ></div>
         </div>
       </v-col>
@@ -144,7 +145,7 @@
           elevation="4"
           @click="
             routeToLink(
-              'https://drive.google.com/file/d/1GAgYJ595LXol3Dq1WkuUEouB1ZqeSLA9/view?usp=sharing'
+              'https://drive.google.com/file/d/1bYa9GKe-I1iEGI4IBgFlz0CGq30oH1EP/view?usp=sharing'
             )
             "
         >
@@ -175,11 +176,11 @@ export default {
         },
       ],
       experience: [
-        // {
-        //   position: 'Software Engineer Intern',
-        //   company: 'House Of Tech',
-        //   duration: '2022 - current',
-        // },
+        {
+          position: 'Software Engineer Intern',
+          company: 'House Of Tech',
+          duration: '2022 - current',
+        },
       ],
       skillSet: [
         {

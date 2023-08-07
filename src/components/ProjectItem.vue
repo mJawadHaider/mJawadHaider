@@ -4,6 +4,10 @@
     class="py-13 ma-0 mb-5 align-center"
     :class="$vuetify.display.smAndDown ? 'px-1' : 'd-flex'"
     style="max-width: 100svw"
+    :style="$vuetify.display.smAndDown
+      ? 'display: flex; flex-direction: column;'
+      : ''
+      "
   >
     <div :class="$vuetify.display.smAndDown ? 'pr-1' : 'pr-5'">
       <div
@@ -46,7 +50,7 @@
         v-if="project.pictures.length !== 1"
         v-model="carouselIndex"
         cycle
-        height="260"
+        :height="projectImageHeight"
         hide-delimiters
         show-arrows="hover"
         style="box-shadow: 5px 4px 9px"
@@ -87,8 +91,7 @@
           <v-img
             class="project-picture"
             style="cursor: pointer"
-            :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''
-              "
+            :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
             :src="require(`@/assets/${slidePic}`)"
             :lazy-src="require(`@/assets/${slidePic}`)"
             @click="openImgDialog"
@@ -280,6 +283,11 @@ export default {
       carouselIndex: 0,
     };
   },
+  computed: {
+    projectImageHeight() {
+      return window.innerWidth > 750 ?  '260' : '146';
+    }
+  },
   methods: {
     openImgDialog() {
       if (this.$vuetify.display.mdAndUp) {
@@ -302,4 +310,5 @@ export default {
   height: 100%;
   /* border: 1px solid #7a7a7a; */
   box-shadow: 5px 4px 9px;
-}</style>
+}
+</style>

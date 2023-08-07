@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-navigation-drawer
+      v-if="$vuetify.display.smAndDown"
       app
       v-model="toggle"
       absolute
