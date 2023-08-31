@@ -3,7 +3,7 @@
     <information-section id="informationSectionId" />
     <about-section id="aboutSectionId" />
     <project-section id="projectSectionId" />
-    <footer-component id="footerSectionId" />
+    <footer-section id="footerSectionId" />
     <custom-snackbar :snackbarVisible="snackbarVisible" :isSnackBarDisabled="isSnackBarDisabled" />
   </div>
 </template>
@@ -12,7 +12,7 @@
 import InformationSection from './MainPageSections/InformationSection.vue';
 import AboutSection from './MainPageSections/AboutSection.vue';
 import ProjectSection from './MainPageSections/ProjectSection.vue';
-import FooterComponent from '@/components/FooterComponent.vue';
+import FooterSection from '@/Pages/MainPageSections/FooterSection.vue';
 import CustomSnackbar from '@/components/CustomSnackbar.vue';
 
 export default {
@@ -20,7 +20,7 @@ export default {
     InformationSection,
     AboutSection,
     ProjectSection,
-    FooterComponent,
+    FooterSection,
     CustomSnackbar,
   },
   data: () => {

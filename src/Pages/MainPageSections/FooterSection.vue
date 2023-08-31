@@ -29,7 +29,7 @@
           >
             <span class="text-white">
               <v-avatar
-                :image="require('../assets/Avatar.jpg')"
+                :image="require('@/assets/Avatar.jpg')"
                 size="64"
                 class="mr-2"
               />
@@ -198,8 +198,8 @@
 </template>
 
 <script>
-import FeedbackForm from "./FeedbackForm.vue";
-import SocialComponent from "./SocialComponent.vue";
+import FeedbackForm from "../../components/FeedbackForm.vue";
+import SocialComponent from "../../components/SocialComponent.vue";
 
 export default {
   components: {
@@ -208,32 +208,6 @@ export default {
   },
   data() {
     return {
-      socialMediaButtons: [
-        {
-          icon: "mdi-linkedin",
-          tooltipText: "Linkedin",
-          link: "https://www.linkedin.com/in/mjawadhaider",
-          background: "#0077b5",
-        },
-        {
-          icon: "mdi-github",
-          tooltipText: "Github",
-          link: "https://github.com/mJawadHaider",
-          background: "grey",
-        },
-        {
-          icon: "mdi-twitter",
-          tooltipText: "Twitter",
-          link: "https://twitter.com/mJawadHaider03",
-          background: "#1da1f2",
-        },
-        {
-          icon: "mdi-instagram",
-          tooltipText: "Instagram",
-          link: "https://www.instagram.com/m.jawad_haider/",
-          background: "#1da1f2",
-        },
-      ],
       toggleSnackbar: false,
       toggleFeedackForm: false,
     };
@@ -289,7 +263,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 $gray: #999d9e;
 $lightGray: #37383b;
 $darkGray: #1c1d20;
@@ -321,7 +294,7 @@ $darkGray: #1c1d20;
   text-transform: none;
   font-size: 23px;
   transition: 0.1s;
-  border-radius: 100%;
+  border-radius: 50%;
 
   #text {
     flex: 1;

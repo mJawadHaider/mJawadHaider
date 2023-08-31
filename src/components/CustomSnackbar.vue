@@ -9,6 +9,7 @@
   >
     <template v-slot:actions>
       <v-btn
+        v-show="!isSnackBarDisabled"
         class="ma-0 custom-btn-hover"
         size="75"
         elevation="20"

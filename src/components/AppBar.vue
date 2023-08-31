@@ -28,7 +28,10 @@
           />
         </v-btn>
       </div>
-      <div style="width: 100%; margin: 83px 16px 24px;">
+      <div
+        style="width: 100%; margin: 83px 16px 24px;"
+        class="px-3"
+      >
         <span
           style="color: gray; font-size: 13px; margin-bottom: 10px;"
           class="upper-case"
@@ -39,6 +42,7 @@
       </div>
       <v-list
         v-if="showNavigationList"
+        class="px-5"
         nav
       >
         <div
@@ -62,6 +66,24 @@
           </v-list-item>
         </div>
       </v-list>
+      <div
+        :style="$vuetify.display.xs ? { height: '34%' } : { height: '38%' }"
+        style="align-content: space-between;"
+        class="d-flex flex-column justify-end mx-7 mb-12"
+      >
+        <div
+          class="stripe mb-5"
+          style="width: 100%;"
+        />
+        <span class="text-gray my-5">SOCIALS</span>
+        <div
+          v-if="showNavigationList"
+          style="animation: slideInRight 0.5s ease-in forwards;"
+        >
+          <social-component
+            :iconSize="$vuetify.display.xs ? 'default' : 'x-large'" />
+        </div>
+      </div>
     </v-navigation-drawer>
     <v-app-bar
       v-if="!isFooterVisible"
@@ -141,7 +163,12 @@
 </template>
 
 <script>
+import SocialComponent from './SocialComponent.vue';
+
 export default {
+  components: {
+    SocialComponent,
+  },
   props: {
     tabs: {
       type: Array,
@@ -202,7 +229,7 @@ export default {
       if (distance < 500) {
         event.target.style.transform = `translate(${deltaX / 10}px, ${deltaY / 10}px)`;
       } else {
-        event.target.style.transform = 'translate(0, 0)';  
+        event.target.style.transform = 'translate(0, 0)';
       }
     },
     handleMouseLeave() {
@@ -245,9 +272,9 @@ export default {
 
 .stripe {
   width: 90%;
-  height: 1px;
+  height: 2px;
   display: block;
-  background-color: white;
+  background-color: #ffffff39;
   margin-block: 20px;
 }
 
@@ -256,10 +283,12 @@ export default {
   animation: slideInRight 0.5s ease-in forwards;
 
   .v-list-item__content {
-    padding-block: 22px;
+    padding-block: 10px;
 
     .v-list-item-title {
       font-size: 1.5rem;
+      padding-block: 10px;
+      height: 40px;
       text-transform: uppercase !important;
     }
   }

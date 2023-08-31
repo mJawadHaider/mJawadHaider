@@ -14,7 +14,7 @@
         class="mr-3 custom-btn-hover"
         variant="tonal"
         color="white"
-        size="35"
+        :size="iconSize || 35"
         elevation="4"
         @click="routeToLink(button.link)"
         @mouseleave="handleMouseLeave"
@@ -22,7 +22,7 @@
         <v-icon
           color="white"
           v-bind="button"
-          size="22"
+          :size="iconSize || 22"
         >
           {{ button.icon }}
         </v-icon>
@@ -39,6 +39,12 @@
 
 <script>
 export default {
+  props: {
+    iconSize: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       socialMediaButtons: [
@@ -57,7 +63,7 @@ export default {
         {
           icon: 'mdi-twitter',
           tooltipText: 'Twitter',
-          link: 'https://twitter.com/mJawadHaider03',
+          link: 'https://twitter.com/mjawad_haider',
           background: '#1da1f2',
         },
         {
