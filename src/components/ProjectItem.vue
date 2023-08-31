@@ -9,7 +9,10 @@
       : ''
       "
   >
-    <div :class="$vuetify.display.smAndDown ? 'pr-1' : 'pr-5'">
+    <div
+      :class="$vuetify.display.smAndDown ? 'pr-1' : 'pr-5'"
+      class="text-lightGray"
+    >
       <div
         class="project-item d-flex mt-4"
         style="font-size: large; font-weight: bold"
@@ -64,7 +67,7 @@
             icon
             @click="props.onClick"
           >
-            <v-icon color="brown-darken-3">
+            <v-icon :color="lightGray">
               mdi-arrow-left-drop-circle-outline
             </v-icon>
           </v-btn>
@@ -78,7 +81,7 @@
             icon
             @click="props.onClick"
           >
-            <v-icon color="brown-darken-3">
+            <v-icon :color="lightGray">
               mdi-arrow-right-drop-circle-outline
             </v-icon>
           </v-btn>
@@ -90,7 +93,6 @@
         >
           <v-img
             class="project-picture"
-            style="cursor: pointer"
             :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
             :src="require(`@/assets/${slidePic}`)"
             :lazy-src="require(`@/assets/${slidePic}`)"
@@ -138,31 +140,21 @@
 
       <div class="mt-9 d-flex justify-center">
         <v-btn
-          v-if="project.githubLink"
-          small
+          v-for="(btn, index) in buttons"
+          :key="index"
           variant="elevated"
           elevation="4"
-          size="small"
+          rounded
+          :size="$vuetify.display.xs ? 'default' : 'large'"
           prepend-icon="mdi-github"
-          class="mr-4"
-          :class="index % 2 === 0 ? 'text-#252525' : 'text-white'"
-          :color="index % 2 === 0 ? 'grey-lighten-2' : '#a2a2a2'"
-          @click="routeToLink(project.githubLink)"
+          class="mr-4 text-white"
+          :class="{ 'custom-btn-hover': $vuetify.display.mdAndUp }"
+          :color="lightGray"
+          @click="routeToLink(project[btn.linkKey])"
+          @mousemove="handleMouseMove_Small"
+          @mouseleave="handleMouseLeave"
         >
-          GITHUB-LINK
-        </v-btn>
-        <v-btn
-          v-if="project.projectLink"
-          small
-          variant="elevated"
-          elevation="4"
-          size="small"
-          prepend-icon="mdi-open-in-new"
-          :class="index % 2 === 0 ? 'text-#252525' : 'text-white'"
-          :color="index % 2 === 0 ? 'grey-lighten-2' : '#a2a2a2'"
-          @click="routeToLink(project.projectLink)"
-        >
-          SEE PROJECT
+          {{ btn.title }}
         </v-btn>
       </div>
     </div>
@@ -188,7 +180,7 @@
             icon
             @click="props.onClick"
           >
-            <v-icon color="brown-darken-3">
+            <v-icon :color="lightGray">
               mdi-arrow-left-drop-circle-outline
             </v-icon>
           </v-btn>
@@ -202,7 +194,7 @@
             icon
             @click="props.onClick"
           >
-            <v-icon color="brown-darken-3">
+            <v-icon :color="lightGray">
               mdi-arrow-right-drop-circle-outline
             </v-icon>
           </v-btn>
@@ -214,7 +206,7 @@
         >
           <v-img
             class="project-picture"
-            style="cursor: pointer"
+            style="cursor: zoom-out"
             :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''
               "
             :src="require(`@/assets/${slidePic}`)"
@@ -285,8 +277,21 @@ export default {
   },
   computed: {
     projectImageHeight() {
-      return window.innerWidth > 750 ?  '260' : '146';
-    }
+      return this.$vuetify.display.xs ? '164' : '260';
+    },
+    buttons() {
+      let btns = [
+        {
+          title: 'GITHUB-LINK',
+          linkKey: 'githubLink',
+        },
+        {
+          title: 'SEE PROJECT',
+          linkKey: 'projectLink',
+        },
+      ];
+      return btns.filter(btn => this.project[btn.linkKey]);
+    },
   },
   methods: {
     openImgDialog() {
@@ -298,10 +303,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .project-item {
   font-family: 'Roboto Condensed', sans-serif;
-  color: #473a3a;
+  /* color: #473a3a; */
+}
+
+.v-btn {
+  height: 50px;
+  border-radius: 30px;
+  padding-inline: 23px;
 }
 
 .project-picture {
@@ -310,5 +321,6 @@ export default {
   height: 100%;
   /* border: 1px solid #7a7a7a; */
   box-shadow: 5px 4px 9px;
+  cursor: zoom-in;
 }
 </style>

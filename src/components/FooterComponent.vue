@@ -1,138 +1,397 @@
 <template>
   <v-row
-    class="ma-0 footer-section align-center"
-    :class="$vuetify.display.smAndDown ? 'py-10' : 'py-15'"
     justify="center"
+    class="ma-0 footer-section text-gray"
+    :class="{ 'tab-screen-footer': $vuetify.display.sm }"
   >
-    <section-header
-      title="Get In Touch"
-      titleColor="#a2a2a2"
-      icon="mdi-email-open"
-      iconColor="#a2a2a2"
-      :lineStyling="{ width: '200px', color: 'white' }"
-    />
-
     <v-col
       cols="12"
-      md="3"
-      sm="12"
-      class="d-flex flex-column align-center"
-      :class="$vuetify.display.smAndDown ? 'my-3' : ''"
+      md="8"
+      sm="10"
+      :class="{ 'px-6': $vuetify.display.smAndDown }"
+      style="animation: fadeUp 0.5s ease-in-out"
     >
-      <h3>Email:</h3>
-
-      <span class="mt-3">
-        <v-icon
-          icon="mdi-email"
-          size="small"
-          class="mr-1"
-        />
-        <span
-          @click="routeToLink('mailto:jhaider869@gmail.com')"
-          style="cursor: pointer; text-decoration: underline"
+      <div
+        ref="animatedDiv"
+        class="fading-col"
+      >
+        <v-row
+          class="d-flex"
+          style="animation: fadeUp 0.5s ease-in-out;"
         >
-          {{ 'jhaider869@gmail.com' }}
-        </span>
-      </span>
-    </v-col>
+          <v-col
+            cols="11"
+            md="9"
+            sm="9"
+            class="d-flex flex-column"
+            :style="$vuetify.display.mdAndUp ? 'font-size: 60px;' : 'font-size: 45px'
+              "
+          >
+            <span class="text-white">
+              <v-avatar
+                :image="require('../assets/Avatar.jpg')"
+                size="64"
+                class="mr-2"
+              />
+              Let's work
+            </span>
 
-    <v-col
-      cols="12"
-      md="3"
-      sm="12"
-      class="d-flex flex-column align-center"
-    >
-      <h3 class="mb-3">Follow Me:</h3>
-      <div>
-        <v-tooltip
-          v-for="(button, index) in socialMediaButtons"
-          :key="index"
-          location="top"
-          :content="button.name"
-          max-width="63px"
-          max-height="20px"
-        >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              v-bind="props"
+            <span class="text-white"> together </span>
+          </v-col>
+
+          <v-col
+            cols="1"
+            md="3"
+            sm="3"
+            class="d-flex"
+            :class="$vuetify.display.xs || $vuetify.display.mdAndUp
+              ? 'align-end pa-0 mb-10'
+              : 'align-center justify-end'
+              "
+          >
+            <v-icon
+              color="white"
+              icon="mdi-arrow-bottom-left"
+            />
+          </v-col>
+
+          <v-col
+            cols="12"
+            class="d-flex align-center pb-0"
+            style="flex: wrap"
+          >
+            <v-divider
+              color="white"
+              :length="$vuetify.display.xs ? 166 : 680"
+            />
+            <button
               icon
-              class="mr-3"
-              variant="tonal"
-              color="#a2a2a2"
-              size="small"
-              elevation="4"
-              @click="routeToLink(button.link)"
+              size="150"
+              class="btn-get-in-touch custom-btn-hover"
+              :color="lightGray"
+              :style="$vuetify.display.smAndDown ? 'height: 160px; width: 230px' : ''
+                "
+              @click="getInTouch"
+              @mousemove="handleMouseMove"
+              @mouseleave="handleMouseLeave"
+            >
+              Get in touch!
+            </button>
+            <v-divider
+              color="white"
+              :length="$vuetify.display.xs ? 40 : 140"
+            />
+          </v-col>
+
+          <v-col
+            v-if="!toggleFeedackForm"
+            cols="12"
+            class="d-flex align-center move-left"
+            :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
+            :style="$vuetify.display.xs
+              ? { flexDirection: 'column' }
+              : { flexDirection: 'row' }
+              "
+          >
+            <v-btn
+              key="email"
+              variant="outlined"
+              color="white"
+              rounded
+              :height="$vuetify.display.xs ? 65 : 55"
+              width="300"
+              :block="$vuetify.display.xs"
+              class="custom-btn-hover email-button"
+              :style="`border: 1px solid ${gray}; border-radius: 100px`"
+              :class="$vuetify.display.xs ? 'mb-4' : 'mr-5'"
+              @click="routeToLink('mailto:jhaider869@gmail.com')"
+              @mousemove="handleMouseMove_Small"
+              @mouseleave="handleMouseLeave"
             >
               <v-icon
-                color="#a2a2a2"
-                v-bind="button"
-                size="x-large"
-              >
-                {{ button.icon }}
-              </v-icon>
+                icon="mdi-email"
+                size="large"
+                class="mr-2"
+              />
+              jhaider869@gmail.com
             </v-btn>
-          </template>
-          <span
-            class="d-flex justify-center"
-            style="font-size: 12px; margin-top: -4px"
+
+            <v-btn
+              key="phone"
+              variant="outlined"
+              color="white"
+              rounded
+              :height="$vuetify.display.xs ? 65 : 55"
+              width="200"
+              :block="$vuetify.display.xs"
+              class="custom-btn-hover"
+              :style="`border: 1px solid ${gray}; border-radius: 100px`"
+              @click="copyToCipboard('+92362474916')"
+              @mousemove="handleMouseMove_Small"
+              @mouseleave="handleMouseLeave"
+            >
+              <v-icon
+                icon="mdi-phone"
+                size="large"
+                class="mr-2"
+              />
+              +92 36 2474916
+            </v-btn>
+          </v-col>
+          <v-col
+            v-else
+            cols="12"
+            class="move-right"
+            :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
           >
-            {{ button.tooltipText }}
-          </span>
-        </v-tooltip>
+            <feedback-form
+              id="feedback-form"
+              @onClose="feedbackFormClosed"
+            />
+          </v-col>
+        </v-row>
+      </div>
+    </v-col>
+    <v-col
+      cols="12"
+      md="11"
+      class="pb-8"
+      style="padding-top: 100px"
+      :class="$vuetify.display.xs ? 'small-screen-footer px-6 pt-16' : 'footer px-16'
+        "
+    >
+      <div
+        class="d-flex flex-column"
+        style="width: 50%; justify-self: self-end"
+      >
+        <h5 style="font-size: 9.6px; margin-bottom: 14.4px">VERSION</h5>
+        <span
+          style="font-size: 13.6px"
+          class="text-white"
+        >
+          2023 <v-icon
+            icon="mdi-copyright"
+            size="15"
+          /> Edition
+        </span>
+      </div>
+      <span class="py-7">
+        <v-divider
+          v-if="$vuetify.display.xs"
+          color="white"
+        />
+      </span>
+      <div
+        :style="$vuetify.display.xs
+          ? { width: '100%' }
+          : { width: '50%', justifyContent: 'end' }
+          "
+        class="d-flex"
+      >
+        <div>
+          <h5 style="font-size: 9.6px; margin-bottom: 14.4px">SOCIALS</h5>
+          <social-component />
+        </div>
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import SectionHeader from './SectionHeader.vue';
+import FeedbackForm from "./FeedbackForm.vue";
+import SocialComponent from "./SocialComponent.vue";
 
 export default {
   components: {
-    SectionHeader,
+    FeedbackForm,
+    SocialComponent,
   },
   data() {
     return {
       socialMediaButtons: [
         {
-          icon: 'mdi-linkedin',
-          tooltipText: 'Linkedin',
-          link: 'https://www.linkedin.com/in/mjawadhaider',
-          background: '#0077b5',
+          icon: "mdi-linkedin",
+          tooltipText: "Linkedin",
+          link: "https://www.linkedin.com/in/mjawadhaider",
+          background: "#0077b5",
         },
         {
-          icon: 'mdi-github',
-          tooltipText: 'Github',
-          link: 'https://github.com/mJawadHaider',
-          background: 'grey',
+          icon: "mdi-github",
+          tooltipText: "Github",
+          link: "https://github.com/mJawadHaider",
+          background: "grey",
         },
         {
-          icon: 'mdi-twitter',
-          tooltipText: 'Twitter',
-          link: 'https://twitter.com/mJawadHaider03',
-          background: '#1da1f2',
+          icon: "mdi-twitter",
+          tooltipText: "Twitter",
+          link: "https://twitter.com/mJawadHaider03",
+          background: "#1da1f2",
         },
         {
-          icon: 'mdi-instagram',
-          tooltipText: 'Instagram',
-          link: 'https://www.instagram.com/m.jawad_haider/',
-          background: '#1da1f2',
+          icon: "mdi-instagram",
+          tooltipText: "Instagram",
+          link: "https://www.instagram.com/m.jawad_haider/",
+          background: "#1da1f2",
         },
       ],
+      toggleSnackbar: false,
+      toggleFeedackForm: false,
     };
+  },
+  methods: {
+    copyToCipboard(value) {
+      const textField = document.createElement("textarea");
+      textField.innerText = value;
+      document.body.appendChild(textField);
+      textField.select();
+      document.execCommand("copy");
+      textField.remove();
+      this.$toast.info("Copied to clipboard!!");
+    },
+    getInTouch() {
+      this.toggleFeedackForm = !this.toggleFeedackForm;
+
+      setTimeout(() => {
+        const form = document.getElementById("feedback-form");
+        if (!form) return;
+
+        form.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 350);
+
+      clearTimeout();
+    },
+    feedbackFormClosed() {
+      this.toggleFeedackForm = false;
+    },
+  },
+  mounted() {
+    const options = {
+      rootMargin: '10px',
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, options);
+
+    observer.observe(this.$refs.animatedDiv);
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+
+$gray: #999d9e;
+$lightGray: #37383b;
+$darkGray: #1c1d20;
+
 .footer-section {
-  background-color: #252525;
-  color: #a2a2a2;
+  background-color: $darkGray;
   box-shadow: 1px 1px 100px;
   z-index: 1;
+  padding-top: 100px;
+}
+
+.tab-screen-footer {
+  padding-top: 140px;
 }
 
 .footer-section h3 {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.btn-get-in-touch {
+  background-color: $lightGray;
+  padding: 20px;
+  height: 190px;
+  width: 190px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  text-transform: none;
+  font-size: 23px;
+  transition: 0.1s;
+  border-radius: 100%;
+
+  #text {
+    flex: 1;
+  }
+}
+
+.custom-btn-hover {
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: darken(#353536, 5%);
+    transition: all 0.3s;
+    border-radius: 10rem;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: white;
+
+    &:before {
+      height: 100%;
+    }
+  }
+}
+
+.email-button {
+  border: 1px solid $gray;
+  border-radius: 100px;
+
+  .v-btn__content {
+    text-transform: lowercase;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-self: end;
+  align-self: flex-end;
+}
+
+.small-screen-footer {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.fading-col {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s, transform 0.5s;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.move-right {
+  animation: slideInRight 0.3s ease-in forwards;
+}
+
+.move-left {
+  animation: slideInLeft 0.3s ease-in forwards;
 }
 </style>

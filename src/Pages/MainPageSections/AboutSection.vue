@@ -4,7 +4,7 @@
     class="fading mt-3"
     style="
       box-shadow: 1px 1px 8px;
-      background-color: whitesmoke;
+      background-color: white;
       padding-bottom: 60px;
     "
   >
@@ -16,7 +16,8 @@
       <section-header
         title="About Me"
         icon="mdi-account-box-outline"
-        iconColor="#473a3a"
+        :iconColor="darkGray"
+        :titleColor="darkGray"
         :lineStyling="{ width: '300px', color: '#353131' }"
         :titleStyling="$vuetify.display.smAndDown ? 'mt-16' : 'mt-10'"
       />
@@ -28,7 +29,7 @@
       >
         <h1
           v-if="experience?.length"
-          style="color: #473a3a"
+          :style="{ color: darkGray, fontSize: '34px' }"
         >
           Experience
         </h1>
@@ -39,7 +40,7 @@
         >
           <p
             class="education-item mt-4"
-            style="font-size: large; font-weight: bold"
+            style="font-size: 20px; font-weight: bold"
           >
             {{ item.position }}
           </p>
@@ -60,14 +61,14 @@
         </div>
 
 
-        <h1 style="color: #473a3a">Education</h1>
+        <h1 :style="{ color: darkGray, fontSize: '34px' }">Education</h1>
         <div
           v-for="(item, index) in education"
           :key="index"
         >
           <p
             class="education-item mt-4"
-            style="font-size: large; font-weight: bold"
+            style="font-size: 20px; font-weight: bold"
           >
             {{ item.degree }}
           </p>
@@ -97,7 +98,7 @@
         md="5"
         sm="12"
       >
-        <h1 style="color: #473a3a">Skills</h1>
+        <h1 :style="{ color: darkGray, fontSize: '34px' }">Skills</h1>
         <v-row
           v-for="(item, index) in skillSet"
           :key="index"
@@ -124,6 +125,7 @@
           >
             <v-progress-linear
               v-model="item.skillPower"
+              :color="lightGray"
               class="mt-4"
             />
           </v-col>
@@ -138,16 +140,20 @@
         class="d-flex justify-end mt-5"
       >
         <v-btn
-          class="text-white"
-          color="#a2a2a2"
+          class="text-white download-btn"
+          :color="lightGray"
+          rounded
           prepend-icon="mdi-open-in-new"
           variant="elevated"
+          size="large"
           elevation="4"
           @click="
             routeToLink(
               'https://drive.google.com/file/d/1bYa9GKe-I1iEGI4IBgFlz0CGq30oH1EP/view?usp=sharing'
             )
             "
+          @mousemove="handleMouseMove_Small"
+          @mouseleave="handleMouseLeave"
         >
           DOWNLOAD RESUME
         </v-btn>
@@ -259,7 +265,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .fading {
   opacity: 0;
   transform: translateY(-20px);
@@ -267,15 +273,15 @@ export default {
 }
 
 .about-row {
-  background-color: whitesmoke;
   animation: fadeUp 0.5s ease-in-out;
   height: auto;
   z-index: 1;
 }
 
+$lightGray: #37383b;
 .education-item {
   font-family: 'Roboto Condensed', sans-serif;
-  color: #473a3a;
+  color: $lightGray;
 }
 
 .seperator {
@@ -287,5 +293,12 @@ export default {
 .visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.download-btn {
+  border-radius: 30px;
+  height: 50px;
+  border-radius: 30px;
+  padding-inline: 23px;
 }
 </style>

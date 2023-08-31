@@ -11,8 +11,9 @@
       <section-header
         title="Projects"
         icon="mdi-briefcase"
-        iconColor="#473a3a"
-        :lineStyling="{ width: '300px', color: '#353131' }"
+        :iconColor="lightGray"
+        :titleColor="lightGray"
+        :lineStyling="{ width: '300px', color: lightGray }"
         titleStyling="mt-12"
       />
 

@@ -1,18 +1,24 @@
 <template>
   <v-col
     cols="8"
-    md="4"
+    :md="+md || 4"
     sm="8"
     class="d-flex justify-center align-center"
     :class="titleStyling"
+    :style="titleStyling"
   >
-    <h1 :style="`color: ${titleColor}`">{{ title }}</h1>
+    <h1
+      :style="`color: ${titleColor}`"
+      style="font-size: 40px;"
+    >
+      {{ title }}
+    </h1>
   </v-col>
 
   <!-- seperator -->
   <v-col
     cols="12"
-    md="10"
+    :md="+seperatorMd || 10"
     sm="12"
     class="py-0 d-flex align-center justify-center"
     style="max-height: 52px"
@@ -38,6 +44,14 @@
 <script>
 export default {
   props: {
+    md: {
+      type: Number,
+      default: () => 4,
+    },
+    seperatorMd: {
+      type: Number,
+      default: () => 10,
+    },
     title: {
       type: String,
       default: () => 'Title Here',

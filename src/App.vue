@@ -1,8 +1,9 @@
 <template>
-  <v-app style="background-color: #a2a2a2">
+  <v-app :style="appStyle">
     <app-bar
       id="appBarId"
       :tabs="tabs"
+      :isFooterVisible="isFooterVisible"
       @toggleNavigationDrawer="toggleNavigationDrawer"
     />
     <v-main class="main-container">
@@ -28,6 +29,7 @@ export default {
     return {
       activeTabIndex: 0,
       disbaleSnackbar: false,
+      isFooterVisible: false,
     };
   },
   computed: {
@@ -62,10 +64,19 @@ export default {
           : { ...tab, isActive: false }
       );
     },
+    appStyle() {
+      return {
+        'background-color': this.gray,
+        height: '100vh',
+        'max-height': '100vh',
+        'min-height': '100vh',
+      };
+    },
   },
   methods: {
-    toggleTabIndex(index) {
-      this.activeTabIndex = index || 0;
+    toggleTabIndex(element) {
+      this.isFooterVisible = element.ref === 'footerSectionId';
+      this.activeTabIndex = element?.index || 0;
     },
     toggleNavigationDrawer(toggle) {
       document.documentElement.style.overflow = toggle
@@ -80,9 +91,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+$gray: #999d9e;
+$darkGray: #1c1d20;
+$lightGray: #37383b;
 
 * {
   font-family: 'Fira Sans', sans-serif;
@@ -94,8 +109,37 @@ export default {
   text-transform: uppercase !important;
 }
 
+.font-18 {
+  font-size: 18px;
+}
+.font-16 {
+  font-size: 16px;
+}
+
+.v-toast {
+  .v-toast__item {
+    width: 300px;
+  }
+  .v-toast__text {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    padding-block: 10px;
+    margin-inline: 0;
+  }
+}
+
+.text-darkGray {
+  color: $darkGray;
+}
+.text-gray {
+  color: $gray;
+}
+.text-lightGray {
+  color: $lightGray;
+}
+
 .main-container {
-  background-color: #a2a2a2;
   padding: 0px;
 
   @media (max-width: 900px) {

@@ -5,40 +5,41 @@
       app
       v-model="toggle"
       absolute
-      color="#a2a2a2"
+      :color="darkGray"
       style="position: fixed"
       elevation="10"
+      location="right"
+      width="500"
     >
-      <v-list-item
-        prepend-icon="mdi-account-circle"
-        :style="{
-          background: '#535353',
-          'padding-block': '10px',
-          color: '#1f1d1d',
-        }"
-        class="drawer-header"
+      <div
+        style="color: white;"
+        class="mr-6 py-4 d-flex justify-end"
       >
-        <h3>M Jawad Haider</h3>
-        <template v-slot:append>
-          <v-btn
-            variant="tonal"
-            density="comfortable"
-            icon
-            @click.stop="toggle = !toggle"
-          >
-            <v-icon
-              size="large"
-              color="#1f1d1d"
-            >
-              mdi-chevron-left
-            </v-icon>
-          </v-btn>
-        </template>
-      </v-list-item>
-      <v-divider />
+        <v-btn
+          variant="tonal"
+          size="x-large"
+          icon
+          @click.stop="toggleNavigationDrawer"
+        >
+          <v-icon
+            size="x-large"
+            color="white"
+            icon="mdi-close"
+          />
+        </v-btn>
+      </div>
+      <div style="width: 100%; margin: 83px 16px 24px;">
+        <span
+          style="color: gray; font-size: 13px; margin-bottom: 10px;"
+          class="upper-case"
+        >
+          Navigation
+        </span>
+        <div class="stripe" />
+      </div>
       <v-list
+        v-if="showNavigationList"
         nav
-        density="compact"
       >
         <div
           v-for="(tab, index) in tabs"
@@ -47,56 +48,93 @@
           <v-list-item
             :title="tab.title"
             :active="tab.isActive"
-            base-color="#1f1d1d"
-            color="brown-darken-4"
-            class="mt-1 upper-case"
+            :base-color="gray"
+            color="white"
+            class="mt-1 upper-case navigation-list"
             @click="scrollToSection(tab, index)"
-          />
-          <v-divider v-if="index !== tabs.length - 1" />
+          >
+            <template v-slot:append>
+              <div
+                class="dot"
+                v-if="tab.isActive"
+              ></div>
+            </template>
+          </v-list-item>
         </div>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
-      app
+      v-if="!isFooterVisible"
       id="appBar"
-      color="#535353"
-      elevation="4"
-      density="compact"
-      :style="{ position: 'fixed' }"
+      class="pt-3 px-6 font-18"
+      scroll-behavior="fade-image hide"
+      scroll-threshold="191"
+      app
+      flat
+      :color="darkGray"
+      :image="require('../assets/app-bar.png')"
+      :elevation="0"
+      style="height: 80px"
     >
-      <v-app-bar-nav-icon
-        v-if="$vuetify.display.smAndDown"
-        @click.stop="toggle = !toggle"
-      />
       <div
-        v-if="$vuetify.display.mdAndUp"
-        class="app-bar-title"
+        class="app-bar-title text-white magnetic-div"
+        style="height: 100%; cursor: pointer;"
+        :style="$vuetify.display.smAndDown ? 'width: 50%; padding: 0' : 'width: 18%'"
+        @mousemove="handleMouseMove(-1)"
+        @mouseleave="handleMouseLeave(-1)"
+        @mouseenter="handleMouseEnter"
+        @click="refreshPage"
       >
         <v-icon
-          icon="mdi-account-circle"
-          class="pt-1 mr-2"
+          icon="mdi-copyright"
+          class="pt-0 mr-1"
+          size="small"
         />
-        <h3 class="upper-case">M Jawad Haider</h3>
+        <span style="font-weight: 450;">
+          {{ appBarTitle }}
+        </span>
       </div>
       <div
-        v-if="$vuetify.display.mdAndUp"
-        style="width: 100%; margin-right: 7rem; color: #211d1d"
+        v-if="$vuetify.display.smAndDown"
+        style="display: flex; justify-content: end; width: 50%;"
       >
-        <v-tabs
-          v-if="$vuetify.display.mdAndUp"
-          v-model="activeTab"
-          color="grey-lighten-1"
-          align-tabs="end"
+        <v-app-bar-nav-icon
+          :color="gray"
+          class="text-white"
+          flat
+          :ripple="false"
+          width="85"
+          height="40"
+          :border="0"
+          style="border-radius: 7px;"
+          @click.stop="toggleNavigationDrawer"
         >
-          <v-tab
-            v-for="(tab, index) in tabs"
-            :key="index"
-            style="padding-inline: 10px"
-            @click="scrollToSection(tab, index)"
-          >
+          <v-icon
+            icon="mdi-checkbox-blank-circle"
+            size="7"
+            class="mr-2"
+          /> menu
+        </v-app-bar-nav-icon>
+      </div>
+
+      <div
+        v-if="$vuetify.display.mdAndUp"
+        class="tabs-container text-white"
+      >
+        <div
+          v-for="(tab, index) in tabs"
+          :key="index"
+          class="px-2 magnetic-button"
+          :class="tab.isActive ? 'button-selected' : ''"
+          style="border-radius: 5px; transition: transform 0.2s;"
+          @mousemove="handleMouseMove(index)"
+          @mouseleave="handleMouseLeave(index)"
+          @click="scrollToSection(tab)"
+        >
+          <span class="button-text">
             {{ tab.title }}
-          </v-tab>
-        </v-tabs>
+          </span>
+        </div>
       </div>
     </v-app-bar>
   </div>
@@ -109,10 +147,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    isFooterVisible: Boolean,
   },
   data: () => {
     return {
       toggle: false,
+      activeIndex: -1,
+      appBarTitle: 'Code by Jawad',
+      showNavigationList: false,
     };
   },
   watch: {
@@ -129,17 +171,56 @@ export default {
     },
   },
   methods: {
+    toggleNavigationDrawer() {
+      this.toggle = !this.toggle;
+      this.showNavigationList = !this.showNavigationList;
+    },
     scrollToSection(btn) {
       this.toggle = false;
+      this.showNavigationList = false;
       const component = document.getElementById(
-        btn.componentId || 'appBarId'
+        btn?.componentId || 'appBarId'
       );
-      component.scrollIntoView({
+      const scrollPosition = component.getBoundingClientRect().top + window.scrollY - 35;
+      window.scrollTo({
+        top: scrollPosition,
         behavior: 'smooth',
-        block: this.$vuetify.display.mdAndUp
-          ? btn.block || 'start'
-          : 'start',
       });
+    },
+    handleMouseMove() {
+      const x = event.clientX;
+      const y = event.clientY;
+
+      const rect = event.target.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = x - centerX;
+      const deltaY = y - centerY;
+
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (distance < 500) {
+        event.target.style.transform = `translate(${deltaX / 10}px, ${deltaY / 10}px)`;
+      } else {
+        event.target.style.transform = 'translate(0, 0)';  
+      }
+    },
+    handleMouseLeave() {
+      const button = event.target;
+
+      button.style.animation = 'bounceBack 0.5s ease';
+      setTimeout(() => {
+        button.style.animation = '';
+        button.style.transform = 'translate(0, 0)';
+      }, 500);
+
+      this.appBarTitle = 'Code by Jawad';
+    },
+    handleMouseEnter() {
+      this.appBarTitle = 'JAWAD HAIDER';
+    },
+    refreshPage() {
+      location.reload();
     },
   },
 };
@@ -156,24 +237,113 @@ export default {
 
 .app-bar-title {
   display: flex;
+  align-items: center;
   width: 50%;
   color: #1f1d1d;
-  padding-left: 7rem;
+  padding-left: 1.7rem;
 }
 
-.drawer-header {
-  .v-list-item__prepend {
-    font-size: 20px;
-    width: 40px;
+.stripe {
+  width: 90%;
+  height: 1px;
+  display: block;
+  background-color: white;
+  margin-block: 20px;
+}
+
+.navigation-list {
+
+  animation: slideInRight 0.5s ease-in forwards;
+
+  .v-list-item__content {
+    padding-block: 22px;
+
+    .v-list-item-title {
+      font-size: 1.5rem;
+      text-transform: uppercase !important;
+    }
   }
 
   .v-list-item__append {
-    width: 40px;
-    margin-right: -10px;
+    margin-right: 15px;
   }
 }
 
-.v-list-item-title {
-  text-transform: uppercase !important;
+.magnetic-button {
+  color: #ffffff85;
+  transition: color 0.2s;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .button-text {
+    padding: 20px 10px;
+  }
+
+  &:hover {
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.button-selected {
+  color: white;
+  font-weight: bold;
+}
+
+.tabs-container {
+  width: 100%;
+  color: #211d1d;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  /* Adjust the color as needed */
+  border-radius: 100%;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+@keyframes bounceBack {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(0);
+  }
+
+  40% {
+    transform: translateX(-5px);
+  }
+
+  60% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(700px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 </style>

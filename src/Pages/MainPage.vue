@@ -1,37 +1,10 @@
 <template>
-  <div style="width: 100%">
+  <div :style="{width: '100%', 'background-color': gray}">
     <information-section id="informationSectionId" />
     <about-section id="aboutSectionId" />
     <project-section id="projectSectionId" />
     <footer-component id="footerSectionId" />
-    <v-snackbar
-      v-model="snackbarVisible"
-      location="right bottom"
-      min-width="5"
-      variant="text"
-      :timeout="-1"
-      :style="snackBarStyling"
-    >
-      <template v-slot:actions>
-        <v-btn
-          class="ma-0"
-          density="comfortable"
-          size="x-large"
-          elevation="20"
-          icon
-          :style="{ background: '#535353' }"
-          :disabled="isSnackBarDisabled"
-          @click="scrollToTop"
-        >
-          <v-icon
-            size="x-large"
-            color="grey-lighten-4"
-          >
-            mdi-arrow-up
-          </v-icon>
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <custom-snackbar :snackbarVisible="snackbarVisible" :isSnackBarDisabled="isSnackBarDisabled" />
   </div>
 </template>
 
@@ -40,6 +13,7 @@ import InformationSection from './MainPageSections/InformationSection.vue';
 import AboutSection from './MainPageSections/AboutSection.vue';
 import ProjectSection from './MainPageSections/ProjectSection.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
+import CustomSnackbar from '@/components/CustomSnackbar.vue';
 
 export default {
   components: {
@@ -47,6 +21,7 @@ export default {
     AboutSection,
     ProjectSection,
     FooterComponent,
+    CustomSnackbar,
   },
   data: () => {
     return {
@@ -59,19 +34,7 @@ export default {
       default: false,
     },
   },
-  computed: {
-    snackBarStyling() {
-      return this.$vuetify.display.mdAndUp
-        ? { 'margin-bottom': '60px', 'margin-right': '56px' }
-        : { 'margin-bottom': '30px', 'margin-right': '17px' };
-    },
-  },
   methods: {
-    scrollToTop() {
-      const appElement = document.getElementById('appBarId');
-      appElement.scrollIntoView({ behavior: 'smooth' });
-      this.activeTab = 0;
-    },
     checkVisibility(elementId) {
       const element = document.getElementById(elementId);
       const top = element.getBoundingClientRect().top;
@@ -91,7 +54,8 @@ export default {
       const scrollY = window.scrollY;
       this.snackbarVisible = scrollY > 190;
 
-      // index is according to the order of components & order is changed bcz footer is small and must be checked before above section
+      // index is according to the order of components 
+      // & order is changed bcz footer is small and must be checked before its above section
       let refs = [
         { ref: 'informationSectionId', index: 0 },
         { ref: 'aboutSectionId', index: 1 },
@@ -102,7 +66,7 @@ export default {
       for (let index = 0; index < refs.length; index++) {
         const element = refs[index];
         if (this.checkVisibility(element.ref)) {
-          this.$emit('toggleTabIndex', element.index);
+          this.$emit('toggleTabIndex', element);
           break;
         }
       }
