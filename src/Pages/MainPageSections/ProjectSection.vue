@@ -2,7 +2,6 @@
   <div
     ref="projectAnimation"
     class="fading-div"
-    style="max-width: 100vw"
   >
     <v-row
       justify="center"
@@ -21,9 +20,9 @@
         v-for="(project, index) in projects"
         :key="index"
         class="d-flex justify-center"
-        :style="`width: 100%; ${index % 2 === 0
-            ? ''
-            : 'background-color: white; box-shadow: 1px 1px 8px;'
+        :style="`width: 100%; ${projectsStyling} ${index % 2 === 0
+          ? ''
+          : 'background-color: white; box-shadow: 1px 1px 8px'
           }`"
       >
         <project-item
@@ -97,10 +96,15 @@ export default {
       ],
     };
   },
+  computed: {
+    projectsStyling() {
+      return this.$vuetify.display.mdAndUp ? 'border-radius: 50px;' : 'border-radius: 36px;';
+    },
+  },
   mounted() {
     const options = {
       rootMargin: '0px',
-      threshold: this.$vuetify.display.smAndDown ? 0.0 : 0.2,
+      threshold: this.$vuetify.display.smAndDown ? 0.1 : 0.2,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -133,4 +137,5 @@ export default {
 .visible-div {
   opacity: 1;
   transform: translateY(0);
-}</style>
+}
+</style>

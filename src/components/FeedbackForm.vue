@@ -4,7 +4,7 @@
     class="mx-auto"
     color="transparent"
   >
-    <h3 class="mb-4 text-center">Your Feedback is appreciable!!</h3>
+    <h3 class="mb-4 text-center">Feel Free to Reach Out and Connect!!</h3>
     <v-form
       ref="feedbackForm"
       @submit.prevent="submitFeedback"

@@ -3,6 +3,9 @@
     justify="center"
     class="ma-0 footer-section text-gray"
     :class="{ 'tab-screen-footer': $vuetify.display.sm }"
+    :style="$vuetify.display.mdAndUp
+      ? 'border-radius: 50px 50px 0 0;'
+      : 'border-radius: 30px 30px 0 0;'"
   >
     <v-col
       cols="12"
@@ -75,7 +78,7 @@
               @mousemove="handleMouseMove"
               @mouseleave="handleMouseLeave"
             >
-              Get in touch!
+              Connect with Us!
             </button>
             <v-divider
               color="white"
@@ -150,13 +153,16 @@
             />
           </v-col>
         </v-row>
+        <v-col cols="12" class="text-center mt-16 pb-0">
+          <strong>Thanks for Being Here - Keep Scrolling!</strong>
+        </v-col>
       </div>
     </v-col>
     <v-col
       cols="12"
       md="11"
       class="pb-8"
-      style="padding-top: 100px"
+      style="padding-top: 55px"
       :class="$vuetify.display.xs ? 'small-screen-footer px-6 pt-16' : 'footer px-16'
         "
     >

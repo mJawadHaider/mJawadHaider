@@ -2,11 +2,7 @@
   <div
     ref="animatedElement"
     class="fading mt-3"
-    style="
-      box-shadow: 1px 1px 8px;
-      background-color: white;
-      padding-bottom: 60px;
-    "
+    :style="$vuetify.display.mdAndUp ? 'border-radius: 50px;' : 'border-radius: 26px;'"
   >
     <v-row
       class="about-row"
@@ -270,6 +266,9 @@ export default {
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 1s, transform 0.5s;
+  box-shadow: 1px 1px 8px;
+  background-color: white;
+  padding-bottom: 60px;
 }
 
 .about-row {
@@ -279,6 +278,7 @@ export default {
 }
 
 $lightGray: #37383b;
+
 .education-item {
   font-family: 'Roboto Condensed', sans-serif;
   color: $lightGray;
