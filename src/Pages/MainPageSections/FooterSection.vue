@@ -144,7 +144,7 @@
           <v-col
             v-else
             cols="12"
-            class="move-right"
+            class="move-left"
             :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
           >
             <feedback-form
@@ -152,10 +152,10 @@
               @onClose="feedbackFormClosed"
             />
           </v-col>
+          <v-col cols="12" class="text-center mt-16 pb-0">
+            <strong>Thanks for Being Here - Keep Scrolling!</strong>
+          </v-col>
         </v-row>
-        <v-col cols="12" class="text-center mt-16 pb-0">
-          <strong>Thanks for Being Here - Keep Scrolling!</strong>
-        </v-col>
       </div>
     </v-col>
     <v-col
