@@ -3,9 +3,11 @@
     justify="center"
     class="ma-0 footer-section text-gray"
     :class="{ 'tab-screen-footer': $vuetify.display.sm }"
-    :style="$vuetify.display.mdAndUp
-      ? 'border-radius: 50px 50px 0 0;'
-      : 'border-radius: 30px 30px 0 0;'"
+    :style="
+      $vuetify.display.mdAndUp
+        ? 'border-radius: 50px 50px 0 0;'
+        : 'border-radius: 30px 30px 0 0;'
+    "
   >
     <v-col
       cols="12"
@@ -14,21 +16,16 @@
       :class="{ 'px-6': $vuetify.display.smAndDown }"
       style="animation: fadeUp 0.5s ease-in-out"
     >
-      <div
-        ref="animatedDiv"
-        class="fading-col"
-      >
-        <v-row
-          class="d-flex"
-          style="animation: fadeUp 0.5s ease-in-out;"
-        >
+      <div ref="animatedDiv" class="fading-col">
+        <v-row class="d-flex" style="animation: fadeUp 0.5s ease-in-out">
           <v-col
             cols="11"
             md="9"
             sm="9"
             class="d-flex flex-column"
-            :style="$vuetify.display.mdAndUp ? 'font-size: 60px;' : 'font-size: 45px'
-              "
+            :style="
+              $vuetify.display.mdAndUp ? 'font-size: 60px;' : 'font-size: 45px'
+            "
           >
             <span class="text-white">
               <v-avatar
@@ -47,22 +44,16 @@
             md="3"
             sm="3"
             class="d-flex"
-            :class="$vuetify.display.xs || $vuetify.display.mdAndUp
-              ? 'align-end pa-0 mb-10'
-              : 'align-center justify-end'
-              "
+            :class="
+              $vuetify.display.xs || $vuetify.display.mdAndUp
+                ? 'align-end pa-0 mb-10'
+                : 'align-center justify-end'
+            "
           >
-            <v-icon
-              color="white"
-              icon="mdi-arrow-bottom-left"
-            />
+            <v-icon color="white" icon="mdi-arrow-bottom-left" />
           </v-col>
 
-          <v-col
-            cols="12"
-            class="d-flex align-center pb-0"
-            style="flex: wrap"
-          >
+          <v-col cols="12" class="d-flex align-center pb-0" style="flex: wrap">
             <v-divider
               color="white"
               :length="$vuetify.display.xs ? 166 : 680"
@@ -72,18 +63,16 @@
               size="150"
               class="btn-get-in-touch custom-btn-hover"
               :color="lightGray"
-              :style="$vuetify.display.smAndDown ? 'height: 160px; width: 230px' : ''
-                "
+              :style="
+                $vuetify.display.smAndDown ? 'height: 160px; width: 230px' : ''
+              "
               @click="getInTouch"
               @mousemove="handleMouseMove"
               @mouseleave="handleMouseLeave"
             >
               Connect with Us!
             </button>
-            <v-divider
-              color="white"
-              :length="$vuetify.display.xs ? 40 : 140"
-            />
+            <v-divider color="white" :length="$vuetify.display.xs ? 40 : 140" />
           </v-col>
 
           <v-col
@@ -91,10 +80,11 @@
             cols="12"
             class="d-flex align-center move-left"
             :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
-            :style="$vuetify.display.xs
-              ? { flexDirection: 'column' }
-              : { flexDirection: 'row' }
-              "
+            :style="
+              $vuetify.display.xs
+                ? { flexDirection: 'column' }
+                : { flexDirection: 'row' }
+            "
           >
             <v-btn
               key="email"
@@ -111,11 +101,7 @@
               @mousemove="handleMouseMove_Small"
               @mouseleave="handleMouseLeave"
             >
-              <v-icon
-                icon="mdi-email"
-                size="large"
-                class="mr-2"
-              />
+              <v-icon icon="mdi-email" size="large" class="mr-2" />
               jhaider869@gmail.com
             </v-btn>
 
@@ -133,11 +119,7 @@
               @mousemove="handleMouseMove_Small"
               @mouseleave="handleMouseLeave"
             >
-              <v-icon
-                icon="mdi-phone"
-                size="large"
-                class="mr-2"
-              />
+              <v-icon icon="mdi-phone" size="large" class="mr-2" />
               +92 36 2474916
             </v-btn>
           </v-col>
@@ -147,10 +129,7 @@
             class="move-left"
             :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
           >
-            <feedback-form
-              id="feedback-form"
-              @onClose="feedbackFormClosed"
-            />
+            <feedback-form id="feedback-form" @onClose="feedbackFormClosed" />
           </v-col>
           <v-col cols="12" class="text-center mt-16 pb-0">
             <strong>Thanks for Being Here - Keep Scrolling!</strong>
@@ -163,35 +142,28 @@
       md="11"
       class="pb-8"
       style="padding-top: 55px"
-      :class="$vuetify.display.xs ? 'small-screen-footer px-6 pt-16' : 'footer px-16'
-        "
+      :class="
+        $vuetify.display.xs ? 'small-screen-footer px-6 pt-16' : 'footer px-16'
+      "
     >
       <div
         class="d-flex flex-column"
         style="width: 50%; justify-self: self-end"
       >
         <h5 style="font-size: 9.6px; margin-bottom: 14.4px">VERSION</h5>
-        <span
-          style="font-size: 13.6px"
-          class="text-white"
-        >
-          2023 <v-icon
-            icon="mdi-copyright"
-            size="15"
-          /> Edition
+        <span style="font-size: 13.6px" class="text-white">
+          2023 <v-icon icon="mdi-copyright" size="15" /> Edition
         </span>
       </div>
       <span class="py-7">
-        <v-divider
-          v-if="$vuetify.display.xs"
-          color="white"
-        />
+        <v-divider v-if="$vuetify.display.xs" color="white" />
       </span>
       <div
-        :style="$vuetify.display.xs
-          ? { width: '100%' }
-          : { width: '50%', justifyContent: 'end' }
-          "
+        :style="
+          $vuetify.display.xs
+            ? { width: '100%' }
+            : { width: '50%', justifyContent: 'end' }
+        "
         class="d-flex"
       >
         <div>
@@ -249,16 +221,16 @@ export default {
   },
   mounted() {
     const options = {
-      rootMargin: '10px',
+      rootMargin: "10px",
       threshold: 0.5,
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
         } else {
-          entry.target.classList.remove('visible');
+          entry.target.classList.remove("visible");
         }
       });
     }, options);
