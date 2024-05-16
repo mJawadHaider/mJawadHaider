@@ -1,5 +1,5 @@
 <template>
-  <div :style="{width: '100%', 'background-color': gray}">
+  <div :style="{ width: '100%', backgroundColor: darkGray}">
     <information-section id="informationSectionId" />
     <about-section id="aboutSectionId" />
     <project-section id="projectSectionId" />

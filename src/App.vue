@@ -64,9 +64,11 @@ export default {
           : { ...tab, isActive: false }
       );
     },
+    // 806953
+    // 3b3128
     appStyle() {
       return {
-        'background-color': this.gray,
+        'background-color': this.darkGray,
         height: '100vh',
         'max-height': '100vh',
         'min-height': '100vh',
@@ -98,6 +100,13 @@ export default {
 $gray: #999d9e;
 $darkGray: #1c1d20;
 $lightGray: #37383b;
+
+
+$primaryBackground: #31363F;
+$primary: #222831;
+// $secondary: #76ABAE;
+$secondary: #adeef1;
+$mywhite: #EEEEEE;
 
 * {
   font-family: 'Fira Sans', sans-serif;
@@ -137,6 +146,16 @@ $lightGray: #37383b;
 }
 .text-lightGray {
   color: $lightGray;
+}
+
+.text-myprimary {
+  color: $primary;
+}
+.text-mysecondary {
+  color: $secondary;
+}
+.text-mywhite {
+  color: $mywhite;
 }
 
 .main-container {

@@ -93,13 +93,13 @@
       scroll-threshold="191"
       app
       flat
-      :color="darkGray"
+      :color="primaryBackground"
       :image="require('../assets/app-bar.png')"
       :elevation="0"
       style="height: 80px"
     >
       <div
-        class="app-bar-title text-white magnetic-div"
+        class="app-bar-title text-mysecondary magnetic-button"
         style="height: 100%; cursor: pointer;"
         :style="$vuetify.display.smAndDown ? 'width: 50%; padding: 0' : 'width: 18%'"
         @mousemove="handleMouseMove(-1)"
@@ -112,9 +112,9 @@
           class="pt-0 mr-1"
           size="small"
         />
-        <span style="font-weight: 450;">
+        <p id="appbar-title-text" style="font-weight: 450;">
           {{ appBarTitle }}
-        </span>
+        </p>
       </div>
       <div
         v-if="$vuetify.display.smAndDown"
@@ -141,7 +141,7 @@
 
       <div
         v-if="$vuetify.display.mdAndUp"
-        class="tabs-container text-white"
+        class="tabs-container text-mysecondary"
       >
         <div
           v-for="(tab, index) in tabs"
@@ -153,9 +153,9 @@
           @mouseleave="handleMouseLeave(index)"
           @click="scrollToSection(tab)"
         >
-          <span class="button-text">
+          <p class="button-text">
             {{ tab.title }}
-          </span>
+          </p>
         </div>
       </div>
     </v-app-bar>
@@ -164,6 +164,10 @@
 
 <script>
 import SocialComponent from './SocialComponent.vue';
+import { gsap } from "gsap";
+import TextPlugin from "gsap/TextPlugin";
+
+gsap.registerPlugin(TextPlugin);
 
 export default {
   components: {
@@ -240,11 +244,21 @@ export default {
         button.style.animation = '';
         button.style.transform = 'translate(0, 0)';
       }, 500);
-
-      this.appBarTitle = 'Code by Jawad';
+      
+      gsap.to('#appbar-title-text', {
+        duration: 0.5,
+        text: 'Code by Jawad',
+        ease: "none",
+        delay: 0,
+      });
     },
     handleMouseEnter() {
-      this.appBarTitle = 'JAWAD HAIDER';
+      gsap.to('#appbar-title-text', {
+        duration: 0.5,
+        text: 'JAWAD HAIDER',
+        ease: "none",
+        delay: 0,
+      });
     },
     refreshPage() {
       location.reload();
@@ -299,7 +313,6 @@ export default {
 }
 
 .magnetic-button {
-  color: #ffffff85;
   transition: color 0.2s;
   height: 100%;
   display: flex;
@@ -311,13 +324,12 @@ export default {
   }
 
   &:hover {
-    color: white;
+    color: #adeef1;
     font-weight: bold;
   }
 }
 
 .button-selected {
-  color: white;
   font-weight: bold;
 }
 

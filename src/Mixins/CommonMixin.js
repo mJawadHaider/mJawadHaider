@@ -12,6 +12,11 @@ export default {
       gray: '#999d9e',
       darkGray: '#1c1d20',
       lightGray: '#37383b',
+
+      primaryBackground: '#2b2b2b',
+      primary: '#222831',
+      secondary: '#76ABAE',
+      white: '#EEEEEE',
     };
   },
   methods: {
