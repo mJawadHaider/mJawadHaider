@@ -23,8 +23,7 @@ export default {
     };
   },
   methods: {
-    success() {
-    },
+    success() {},
     routeToLink(link) {
       if (link) {
         window.open(link, '_blank');
@@ -97,14 +96,14 @@ export default {
     initializeCustomCursorOutline() {
       window.addEventListener('mousemove', function (e) {
         if (!customCursor) return;
-        const positionX = e.pageX  + 7;
-        const positionY = e.pageY  + 7;
+        const positionX = e.pageX + 7;
+        const positionY = e.pageY + 7;
 
         customCursor.style.left = `${positionX}px`;
         customCursor.style.top = `${positionY}px`;
       });
 
-      window.addEventListener('click', function(e) {
+      window.addEventListener('click', function (e) {
         if (!customCursor) return;
         customCursor.classList?.add('large');
         setTimeout(() => {
@@ -115,10 +114,16 @@ export default {
   },
   mounted() {
     customCursor = document.querySelector('[cursor-outline]');
-    if (this.$vuetify.display.mdAndUp && customCursor && customCursor.classList) {
+    if (
+      this.$vuetify.display.mdAndUp &&
+      customCursor &&
+      customCursor.classList
+    ) {
       this.initializeCustomCursorOutline();
-      
-      const buttons = document.querySelectorAll('.magnetic-button, button, .my-cursor-hover');
+
+      const buttons = document.querySelectorAll(
+        '.magnetic-button, button, .my-cursor-hover'
+      );
       buttons.forEach((div) => {
         if (div) this.changeCursorOnHover(div);
       });

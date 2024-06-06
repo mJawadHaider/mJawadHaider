@@ -46,9 +46,18 @@
           @click="closeDialog"
         ></v-btn>
       </div>
-      <div class="content" :class="{'flex-column': $vuetify.display.smAndDown}">
-        <div class="description" :class="{'w-100': $vuetify.display.smAndDown}">
-          <div class="d-flex" style="justify-content: space-between">
+      <div
+        class="content"
+        :class="{ 'flex-column': $vuetify.display.smAndDown }"
+      >
+        <div
+          class="description"
+          :class="{ 'w-100': $vuetify.display.smAndDown }"
+        >
+          <div
+            class="d-flex"
+            style="justify-content: space-between"
+          >
             <h3>Description:</h3>
             <p class="duration">{{ project.duration }}</p>
           </div>
@@ -92,8 +101,15 @@
             <v-img :src="require('@/assets/svg-icons/expressjs.svg')" />
           </div>
         </div>
-        <div class="right-content" :class="{'w-100': $vuetify.display.smAndDown}">
-          <p v-if="$vuetify.display.mdAndUp" class="duration">{{ project.duration }}</p>
+        <div
+          class="right-content"
+          :class="{ 'w-100': $vuetify.display.smAndDown }"
+        >
+          <p
+            v-if="$vuetify.display.mdAndUp"
+            class="duration"
+          >{{ project.duration }}
+          </p>
           <div class="images">
             <v-carousel
               v-if="project.pictures.length !== 1"

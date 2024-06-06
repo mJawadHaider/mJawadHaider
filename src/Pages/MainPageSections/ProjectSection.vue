@@ -19,7 +19,7 @@
       <v-col
         cols="12"
         class="d-flex justify-center"
-        :class="{'my-6': $vuetify.display.xs, 'my-16': $vuetify.display.smAndUp}"
+        :class="{ 'my-6': $vuetify.display.xs, 'my-16': $vuetify.display.smAndUp }"
       >
         <v-row
           class="projects-wrapper"
@@ -178,11 +178,12 @@ export default {
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 1s, transform 0.5s;
-  
+
   @media (max-width: 600px) {
     margin-inline: 20px;
     padding-inline: 28px;
   }
+
   @media (max-width: 900px) {
     padding-inline: 14px;
     margin-inline: 60px;

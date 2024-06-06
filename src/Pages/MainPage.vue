@@ -1,10 +1,13 @@
 <template>
-  <div :style="{ width: '100%', backgroundColor: '#222'}">
+  <div :style="{ width: '100%', backgroundColor: '#222' }">
     <information-section id="informationSectionId" />
     <about-section id="aboutSectionId" />
     <project-section id="projectSectionId" />
     <footer-section id="footerSectionId" />
-    <custom-snackbar :snackbarVisible="snackbarVisible" :isSnackBarDisabled="isSnackBarDisabled" />
+    <custom-snackbar
+      :snackbarVisible="snackbarVisible"
+      :isSnackBarDisabled="isSnackBarDisabled"
+    />
   </div>
 </template>
 
@@ -104,4 +107,5 @@ export default {
     opacity: 1;
     transform: translateY(0);
   }
-}</style>
+}
+</style>

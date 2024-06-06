@@ -24,7 +24,10 @@
         class="d-flex flex-column pa-0 mt-4"
         style="gap: 0.7rem;"
       >
-        <div class="experience-wrapper my-card" variant="tonal">
+        <div
+          class="experience-wrapper my-card"
+          variant="tonal"
+        >
           <h1
             v-if="experience?.length"
             :style="{ color: darkGray, fontSize: '34px' }"
@@ -60,7 +63,10 @@
         </div>
 
 
-        <div class="education-wrapper my-card" variant="tonal">
+        <div
+          class="education-wrapper my-card"
+          variant="tonal"
+        >
           <h1 :style="{ color: darkGray, fontSize: '34px' }">Education</h1>
           <div
             v-for="(item, index) in education"
@@ -133,7 +139,7 @@
           </v-col>
         </v-row>
       </v-col>
-      
+
       <!-- Download Resume -->
       <!-- <v-col
         cols="12"
@@ -323,6 +329,7 @@ $lightGray: #37383b;
   border-radius: 20px;
   background-color: #ebc29e;
 }
+
 .skills-wrapper {
   padding-bottom: 40px;
 }

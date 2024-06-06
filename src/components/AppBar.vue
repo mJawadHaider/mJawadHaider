@@ -394,6 +394,7 @@ export default {
   background: linear-gradient(to right, #ff7900, #f3ae72) !important;
   box-shadow: 0 1px 8px black;
 }
+
 .contactme-btn:hover {
   background: linear-gradient(to left, #ec7e1e, #ec7e1e) !important;
 }

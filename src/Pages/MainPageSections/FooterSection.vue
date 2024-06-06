@@ -18,7 +18,6 @@
         ref="animatedDiv"
         class="fading-col"
       >
-      <!-- style="animation: fadeUp 0.5s ease-in-out" -->
         <v-row
           id="footer-content"
           class="d-flex"
@@ -210,7 +209,7 @@
 </template>
 
 <script>
-import {gsap} from 'gsap';
+import { gsap } from 'gsap';
 import FeedbackForm from "../../components/FeedbackForm.vue";
 import SocialComponent from "../../components/SocialComponent.vue";
 
@@ -260,11 +259,11 @@ export default {
           y: -200,
           opacity: 0,
         }, {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: 'power1.out',
-        }
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: 'power1.out',
+      }
       );
     },
   },
@@ -300,11 +299,12 @@ $darkGray: #1c1d20;
   box-shadow: 1px 1px 30px #353535;
   z-index: 1;
   padding-top: 100px;
-  
+
   h3 {
     font-family: "Roboto Condensed", sans-serif;
   }
 }
+
 .footer-section.tab-view {
   padding-top: 140px;
 }

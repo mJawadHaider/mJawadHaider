@@ -24,7 +24,7 @@ app.use(ToastPlugin, {
   duration: 2000,
 });
 
-app.config.globalProperties.$helloWorld = 'Hello World'
+app.config.globalProperties.$helloWorld = 'Hello World';
 
 app.use(VueGtag, {
   appName: 'Jawad Haider',
