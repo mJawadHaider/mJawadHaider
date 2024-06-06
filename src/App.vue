@@ -1,5 +1,10 @@
 <template>
   <v-app :style="appStyle">
+    <div
+      v-if="!$vuetify.display.smAndDown"
+      cursor-outline
+      class="cursor-outline"
+    ></div>
     <app-bar
       id="appBarId"
       :tabs="tabs"
@@ -68,7 +73,8 @@ export default {
     // 3b3128
     appStyle() {
       return {
-        'background-color': this.darkGray,
+        // 'background-color': this.darkGray,
+        'background-color': '#222',
         height: '100vh',
         'max-height': '100vh',
         'min-height': '100vh',
@@ -105,11 +111,14 @@ $lightGray: #37383b;
 $primaryBackground: #31363F;
 $primary: #222831;
 // $secondary: #76ABAE;
-$secondary: #adeef1;
+// $secondary: #adeef1;
+$secondary: #d5a880;
+$secondary-dark: #ec7e1e;
 $mywhite: #EEEEEE;
 
 * {
   font-family: 'Fira Sans', sans-serif;
+  color: #fff;
 }
 
 .v-btn,
@@ -121,6 +130,7 @@ $mywhite: #EEEEEE;
 .font-18 {
   font-size: 18px;
 }
+
 .font-16 {
   font-size: 16px;
 }
@@ -129,6 +139,7 @@ $mywhite: #EEEEEE;
   .v-toast__item {
     width: 300px;
   }
+
   .v-toast__text {
     width: 100%;
     text-align: center;
@@ -141,9 +152,11 @@ $mywhite: #EEEEEE;
 .text-darkGray {
   color: $darkGray;
 }
+
 .text-gray {
   color: $gray;
 }
+
 .text-lightGray {
   color: $lightGray;
 }
@@ -151,15 +164,17 @@ $mywhite: #EEEEEE;
 .text-myprimary {
   color: $primary;
 }
+
 .text-mysecondary {
   color: $secondary;
 }
+
 .text-mywhite {
   color: $mywhite;
 }
 
 .main-container {
-  padding: 0px;
+  padding-top: 140px !important;
 
   @media (max-width: 900px) {
     overflow: hidden;
@@ -173,15 +188,56 @@ body::-webkit-scrollbar {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body {
-  -ms-overflow-style: none;
   /* IE and Edge */
-  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* Firefox */
+  scrollbar-width: none;
+  cursor: url('assets/cursor-dot.png'), auto;
+}
+
+body.hover {
+  cursor: url('assets/cursor-hover.png'), auto !important;
+}
+
+body.card {
+  cursor: url('assets/card-cursor.png'), auto !important;
+}
+
+button:hover {
+  cursor: url('assets/cursor-hover.png'), auto !important;
+}
+
+a:hover {
+  cursor: url('assets/cursor-hover.png'), auto !important;
+}
+
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 2px solid hsla(0, 0%, 100%, 0.5);
+  position: absolute;
+  transition: width 300ms, height 300ms;
+
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 2499;
+  pointer-events: none;
+}
+
+.cursor-outline.large {
+  width: 55px;
+  height: 55px;
+}
+
+.cursor-outline.hover {
+  cursor: url('assets/cursor-hover.png'), auto !important;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 4px;
 }
 
 /* Track */

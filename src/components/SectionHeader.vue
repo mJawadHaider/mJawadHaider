@@ -1,6 +1,6 @@
 <template>
   <v-col
-    cols="8"
+    cols="12"
     :md="+md || 4"
     sm="8"
     class="d-flex justify-center align-center"
@@ -24,7 +24,7 @@
     style="max-height: 52px"
   >
     <hr
-      style="width: 275px; color: white"
+      style="width: 275px; background-color: white; border: none; height: 1.3px;"
       :style="lineStyling"
     />
     <v-icon
@@ -35,7 +35,7 @@
       {{ icon }}
     </v-icon>
     <hr
-      style="width: 275px; color: white"
+      style="width: 275px; background-color: white; border: none; height: 1.3px;"
       :style="lineStyling"
     />
   </v-col>

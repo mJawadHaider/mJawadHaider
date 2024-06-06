@@ -2,7 +2,6 @@
   <div
     ref="animatedElement"
     class="fading mt-3"
-    :style="$vuetify.display.mdAndUp ? 'border-radius: 50px;' : 'border-radius: 26px;'"
   >
     <v-row
       class="about-row"
@@ -12,80 +11,86 @@
       <section-header
         title="About Me"
         icon="mdi-account-box-outline"
-        :iconColor="darkGray"
-        :titleColor="darkGray"
-        :lineStyling="{ width: '300px', color: '#353131' }"
-        :titleStyling="$vuetify.display.smAndDown ? 'mt-16' : 'mt-10'"
+        :titleColor="secondary"
+        :iconColor="white"
+        :lineStyling="{ width: '300px', background: white }"
+        :titleStyling="$vuetify.display.smAndDown ? 'mt-16 pb-0 text-uppercase' : 'mt-10 pb-0 text-uppercase'"
       />
       <!-- Education & Experience -->
       <v-col
         cols="12"
         md="5"
         sm="12"
+        class="d-flex flex-column pa-0 mt-4"
+        style="gap: 0.7rem;"
       >
-        <h1
-          v-if="experience?.length"
-          :style="{ color: darkGray, fontSize: '34px' }"
-        >
-          Experience
-        </h1>
-        <div
-          v-for="(item, index) in experience"
-          :key="index"
-          class="mb-6"
-        >
-          <p
-            class="education-item mt-4"
-            style="font-size: 20px; font-weight: bold"
+        <div class="experience-wrapper my-card" variant="tonal">
+          <h1
+            v-if="experience?.length"
+            :style="{ color: darkGray, fontSize: '34px' }"
           >
-            {{ item.position }}
-          </p>
-          <p class="education-item">
-            {{ item.company }}
-          </p>
-          <p class="education-item">
-            <v-icon
-              size="22"
-              class="mr-1"
-            >mdi-calendar-blank</v-icon>
-            {{ item.duration }}
-          </p>
+            Experience
+          </h1>
           <div
-            v-if="index + 1 !== experience.length"
-            class="my-4 seperator"
-          ></div>
+            v-for="(item, index) in experience"
+            :key="index"
+            class="mb-6"
+          >
+            <p
+              class="education-item mt-4"
+              style="font-size: 20px; font-weight: bold"
+            >
+              {{ item.position }}
+            </p>
+            <p class="education-item">
+              {{ item.company }}
+            </p>
+            <p class="education-item">
+              <v-icon
+                size="22"
+                class="mr-1"
+              >mdi-calendar-blank</v-icon>
+              {{ item.duration }}
+            </p>
+            <div
+              v-if="index + 1 !== experience.length"
+              class="my-4 seperator"
+            ></div>
+          </div>
         </div>
 
 
-        <h1 :style="{ color: darkGray, fontSize: '34px' }">Education</h1>
-        <div
-          v-for="(item, index) in education"
-          :key="index"
-        >
-          <p
-            class="education-item mt-4"
-            style="font-size: 20px; font-weight: bold"
-          >
-            {{ item.degree }}
-          </p>
-          <p class="education-item">
-            <v-icon
-              size="24"
-              class="mr-1"
-            > mdi-school </v-icon>
-            {{ item.institute }}
-          </p>
-          <p class="education-item">
-            <v-icon
-              size="22"
-              class="mr-1"
-            >mdi-calendar-blank</v-icon>
-            {{ item.duration }}
-          </p>
+        <div class="education-wrapper my-card" variant="tonal">
+          <h1 :style="{ color: darkGray, fontSize: '34px' }">Education</h1>
           <div
-            v-if="index + 1 !== education.length"
-            class="my-6 seperator"
-          ></div>
+            v-for="(item, index) in education"
+            :key="index"
+          >
+            <p
+              class="education-item mt-4"
+              style="font-size: 20px; font-weight: bold"
+            >
+              {{ item.degree }}
+            </p>
+            <p class="education-item">
+              <v-icon
+                size="24"
+                class="mr-1"
+              > mdi-school </v-icon>
+              {{ item.institute }}
+            </p>
+            <p class="education-item">
+              <v-icon
+                size="22"
+                class="mr-1"
+              >mdi-calendar-blank</v-icon>
+              {{ item.duration }}
+            </p>
+            <div
+              v-if="index + 1 !== education.length"
+              class="my-6 seperator"
+            ></div>
+          </div>
         </div>
       </v-col>
       <!-- Skills -->
@@ -93,6 +98,7 @@
         cols="12"
         md="5"
         sm="12"
+        class="skills-wrapper my-card"
       >
         <h1 :style="{ color: darkGray, fontSize: '34px' }">Skills</h1>
         <v-row
@@ -127,8 +133,9 @@
           </v-col>
         </v-row>
       </v-col>
+      
       <!-- Download Resume -->
-      <v-col
+      <!-- <v-col
         cols="12"
         md="10"
         sm="12"
@@ -153,13 +160,14 @@
         >
           DOWNLOAD RESUME
         </v-btn>
-      </v-col>
+      </v-col> -->
     </v-row>
   </div>
 </template>
 
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
+import { gsap } from 'gsap';
 
 export default {
   data() {
@@ -239,24 +247,47 @@ export default {
       }
       return breakpoints[window.innerHeight];
     },
+    addScrollAnimation() {
+      const options = {
+        rootMargin: '0px',
+        threshold: this.$vuetify.display.smAndDown ? 0.1 : 0.2,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            this.addAnimationToCards();
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      }, options);
+
+      observer.observe(this.$refs.animatedElement);
+    },
+    addAnimationToCards() {
+      const cards = gsap.utils.toArray('.my-card');
+      cards.forEach(card => {
+        gsap.fromTo(
+          card,
+          {
+            opacity: 0,
+            scale: 0,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            delay: 0.3,
+            duration: 0.7,
+            ease: 'back.out',
+          },
+        );
+      })
+    },
   },
   mounted() {
-    const options = {
-      rootMargin: '0px',
-      threshold: this.$vuetify.display.smAndDown ? 0.1 : 0.2,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        } else {
-          entry.target.classList.remove('visible');
-        }
-      });
-    }, options);
-
-    observer.observe(this.$refs.animatedElement);
+    this.addScrollAnimation();
   },
 };
 </script>
@@ -266,18 +297,35 @@ export default {
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 1s, transform 0.5s;
-  box-shadow: 1px 1px 8px;
-  background-color: white;
+  // background-color: #ffc597;
   padding-bottom: 60px;
+  margin-inline: 50px;
+  border-radius: 22px;
+
+  @media (max-width: 600px) {
+    margin-inline: 20px;
+  }
 }
 
 .about-row {
   animation: fadeUp 0.5s ease-in-out;
   height: auto;
   z-index: 1;
+  gap: 0.7rem;
 }
 
 $lightGray: #37383b;
+
+.experience-wrapper,
+.education-wrapper,
+.skills-wrapper {
+  padding: 16px 28px;
+  border-radius: 20px;
+  background-color: #ebc29e;
+}
+.skills-wrapper {
+  padding-bottom: 40px;
+}
 
 .education-item {
   font-family: 'Roboto Condensed', sans-serif;

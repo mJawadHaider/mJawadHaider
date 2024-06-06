@@ -1,4 +1,7 @@
 import { toUpper } from 'lodash';
+import { gsap } from 'gsap';
+
+let customCursor = {};
 
 export default {
   // app-bar: #535353
@@ -15,7 +18,7 @@ export default {
 
       primaryBackground: '#2b2b2b',
       primary: '#222831',
-      secondary: '#76ABAE',
+      secondary: '#d5a880',
       white: '#EEEEEE',
     };
   },
@@ -79,5 +82,46 @@ export default {
 
       this.appBarTitle = 'Code by Jawad';
     },
+    changeCursorOnHover(element) {
+      element.addEventListener('mouseenter', () => {
+        if (!customCursor) return;
+        customCursor.classList?.add('large');
+        document.body.classList?.add('hover');
+      });
+      element.addEventListener('mouseleave', () => {
+        if (!customCursor) return;
+        customCursor.classList?.remove('large');
+        document.body.classList?.remove('hover');
+      });
+    },
+    initializeCustomCursorOutline() {
+      window.addEventListener('mousemove', function (e) {
+        if (!customCursor) return;
+        const positionX = e.pageX  + 7;
+        const positionY = e.pageY  + 7;
+
+        customCursor.style.left = `${positionX}px`;
+        customCursor.style.top = `${positionY}px`;
+      });
+
+      window.addEventListener('click', function(e) {
+        if (!customCursor) return;
+        customCursor.classList?.add('large');
+        setTimeout(() => {
+          customCursor.classList?.remove('large');
+        }, 200);
+      });
+    },
+  },
+  mounted() {
+    customCursor = document.querySelector('[cursor-outline]');
+    if (this.$vuetify.display.mdAndUp && customCursor && customCursor.classList) {
+      this.initializeCustomCursorOutline();
+      
+      const buttons = document.querySelectorAll('.magnetic-button, button, .my-cursor-hover');
+      buttons.forEach((div) => {
+        if (div) this.changeCursorOnHover(div);
+      });
+    }
   },
 };

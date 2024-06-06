@@ -88,19 +88,18 @@
     <v-app-bar
       v-if="!isFooterVisible"
       id="appBar"
-      class="pt-3 px-6 font-18"
-      scroll-behavior="fade-image hide"
-      scroll-threshold="191"
+      class="pt-2 px-6 font-18 app-bar"
       app
-      flat
-      :color="primaryBackground"
-      :image="require('../assets/app-bar.png')"
-      :elevation="0"
-      style="height: 80px"
+      rounded="xl"
+      scroll-behavior="hide"
+      scroll-threshold="191"
+      :color="'#353535' || '#ffffff17' || primaryBackground"
+      :elevation="1"
+      style="box-shadow: 0 2px 40px -2px #0003 !important"
     >
       <div
-        class="app-bar-title text-mysecondary magnetic-button"
-        style="height: 100%; cursor: pointer;"
+        class="app-bar-title magnetic-button"
+        style="height: 100%;"
         :style="$vuetify.display.smAndDown ? 'width: 50%; padding: 0' : 'width: 18%'"
         @mousemove="handleMouseMove(-1)"
         @mouseleave="handleMouseLeave(-1)"
@@ -112,7 +111,7 @@
           class="pt-0 mr-1"
           size="small"
         />
-        <p id="appbar-title-text" style="font-weight: 450;">
+        <p id="appbar-title-text">
           {{ appBarTitle }}
         </p>
       </div>
@@ -147,13 +146,24 @@
           v-for="(tab, index) in tabs"
           :key="index"
           class="px-2 magnetic-button"
-          :class="tab.isActive ? 'button-selected' : ''"
+          :class="{ 'button-selected': tab.isActive }"
           style="border-radius: 5px; transition: transform 0.2s;"
           @mousemove="handleMouseMove(index)"
           @mouseleave="handleMouseLeave(index)"
           @click="scrollToSection(tab)"
         >
-          <p class="button-text">
+          <v-btn
+            v-if="index + 1 === tabs.length"
+            variant="tonal"
+            rounded="lg"
+            class="contactme-btn text-none"
+          >
+            Contact Me
+          </v-btn>
+          <p
+            v-else
+            class="button-text"
+          >
             {{ tab.title }}
           </p>
         </div>
@@ -244,7 +254,7 @@ export default {
         button.style.animation = '';
         button.style.transform = 'translate(0, 0)';
       }, 500);
-      
+
       gsap.to('#appbar-title-text', {
         duration: 0.5,
         text: 'Code by Jawad',
@@ -264,16 +274,43 @@ export default {
       location.reload();
     },
   },
+  mounted() {
+    const appbarElement = document.getElementById('appBar');
+    appbarElement.style.opacity = '0';
+
+    const appBarTitleEl = gsap.fromTo(
+      '.app-bar-title',
+      {
+        opacity: 0,
+        y: 40,
+      },
+      {
+        y: 0,
+        duration: 1.2,
+        opacity: 1,
+        paused: true,
+        delay: 2.2,
+        ease: 'bounce.out',
+      }
+    )
+
+
+    setTimeout(() => {
+      appbarElement.style.animation = 'bounceIn 1.8s';
+      appbarElement.style.opacity = '1';
+      appBarTitleEl.play();
+    }, 2000);
+  },
 };
 </script>
 
 <style lang="scss">
 .app-bar {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.6em;
-  margin-right: 7rem;
+  height: 80px;
+  width: 85% !important;
+  left: 7% !important;
+  // position: sticky !important;
+  box-shadow: 0 2px 40px #0003 !important;
 }
 
 .app-bar-title {
@@ -282,6 +319,10 @@ export default {
   width: 50%;
   color: #1f1d1d;
   padding-left: 1.7rem;
+
+  p {
+    font-weight: bold
+  }
 }
 
 .stripe {
@@ -317,7 +358,6 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   .button-text {
     padding: 20px 10px;
@@ -331,6 +371,12 @@ export default {
 
 .button-selected {
   font-weight: bold;
+
+  p {
+    color: #ec7e1e !important;
+    font-weight: bolder;
+    text-shadow: 1px 1px 6px black;
+  }
 }
 
 .tabs-container {
@@ -342,6 +388,19 @@ export default {
   justify-content: flex-end;
   align-items: flex-start;
   height: 100%;
+}
+
+.contactme-btn {
+  background: linear-gradient(to right, #ff7900, #f3ae72) !important;
+  box-shadow: 0 1px 8px black;
+}
+.contactme-btn:hover {
+  background: linear-gradient(to left, #ec7e1e, #ec7e1e) !important;
+}
+
+.contactme-btn>.v-btn__content {
+  color: black;
+  font-weight: bold;
 }
 
 .dot {
@@ -373,6 +432,50 @@ export default {
 
   60% {
     transform: translateX(5px);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: translateY(-200px);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  38% {
+    transform: translateY(50px);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+
+  55% {
+    transform: translateY(-30px);
+    animation-timing-function: ease-in;
+  }
+
+  72% {
+    transform: translateY(25px);
+    animation-timing-function: ease-out;
+  }
+
+  81% {
+    transform: translateY(-15px);
+    animation-timing-function: ease-in;
+  }
+
+  90% {
+    transform: translateY(10px);
+    animation-timing-function: ease-out;
+  }
+
+  95% {
+    transform: translateY(-5px);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
   }
 }
 

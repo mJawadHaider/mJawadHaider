@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ width: '100%', backgroundColor: darkGray}">
+  <div :style="{ width: '100%', backgroundColor: '#222'}">
     <information-section id="informationSectionId" />
     <about-section id="aboutSectionId" />
     <project-section id="projectSectionId" />
@@ -50,7 +50,7 @@ export default {
         return true;
       }
     },
-    toggleSnackBar() {
+    toggleSnackBar(e) {
       const scrollY = window.scrollY;
       this.snackbarVisible = scrollY > 190;
 

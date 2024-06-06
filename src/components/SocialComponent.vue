@@ -44,6 +44,10 @@ export default {
       type: String,
       default: '',
     },
+    colored: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -53,24 +57,28 @@ export default {
           tooltipText: 'Linkedin',
           link: 'https://www.linkedin.com/in/mjawadhaider',
           background: '#0077b5',
+          iconColor: '#007bb6',
         },
         {
           icon: 'mdi-github',
           tooltipText: 'Github',
           link: 'https://github.com/mJawadHaider',
           background: 'grey',
+          iconColor: '#181616',
         },
         {
           icon: 'mdi-twitter',
           tooltipText: 'Twitter',
           link: 'https://twitter.com/mjawad_haider',
           background: '#1da1f2',
+          iconColor: '#1da1f2',
         },
         {
           icon: 'mdi-instagram',
           tooltipText: 'Instagram',
           link: 'https://www.instagram.com/m.jawad_haider/',
           background: '#1da1f2',
+          iconColor: '#517fa4',
         },
       ],
     };

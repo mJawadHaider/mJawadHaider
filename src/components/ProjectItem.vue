@@ -1,259 +1,169 @@
 <template>
-  <v-col
-    cols="10"
-    class="py-13 ma-0 mb-5 align-center"
-    :class="$vuetify.display.smAndDown ? 'px-1' : 'd-flex'"
-    style="max-width: 100svw"
-    :style="$vuetify.display.smAndDown
-      ? 'display: flex; flex-direction: column;'
-      : ''
-      "
+  <div class="main-content">
+    <v-img
+      style="border-radius: 12px"
+      :src="require(`@/assets/${project.pictures[0]}`)"
+      :lazy-src="require(`@/assets/${project.pictures[0]}`)"
+      @load="isImageLoading = false"
+    >
+      <template v-slot:placeholder>
+        <v-row
+          class="fill-height ma-0"
+          align="center"
+          justify="center"
+        >
+          <v-progress-circular
+            indeterminate
+            color="grey lighten-5"
+          ></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
+  </div>
+  <div class="overlay-content">
+    {{ project.name }}
+  </div>
+  <v-dialog
+    v-model="project.active"
+    persistent
+    class="project-dialog"
   >
-    <div
-      :class="$vuetify.display.smAndDown ? 'pr-1' : 'pr-5'"
-      class="text-lightGray"
-    >
-      <div
-        class="project-item d-flex mt-4"
-        style="font-size: large; font-weight: bold"
-      >
-        <v-img
-          v-if="project.icon"
-          :style="`max-width: ${project.iconSize}`"
-          :src="require(`../assets/${project.icon}`)"
-          class="mr-1"
-        ></v-img>
-        <span>
-          {{ project.name }}
-          {{ project.atCompany ? ` | ${project.atCompany}` : '' }}
-        </span>
-      </div>
-      <span class="project-item">
-        <p>{{ project.duration }}</p>
-        <h4 class="mt-10">Description:</h4>
-        <p
-          class="mt-2 text-justify"
-          v-html="project.description"
-        />
-
-        <h4 class="mt-10">Responsibilites:</h4>
-        <p
-          class="mt-2 text-justify"
-          v-html="project.responsibilites"
-        />
-      </span>
-    </div>
-    <div
-      :class="$vuetify.display.smAndDown ? 'mt-5' : 'mt-7'"
-      class="d-flex flex-column justify-center align-center"
-      style="max-width: 550px"
-      :style="$vuetify.display.smAndDown ? 'padding-right: 5px' : ''"
-    >
-      <v-carousel
-        v-if="project.pictures.length !== 1"
-        v-model="carouselIndex"
-        cycle
-        :height="projectImageHeight"
-        hide-delimiters
-        show-arrows="hover"
-        style="box-shadow: 5px 4px 9px"
-      >
-        <template v-slot:prev="{ props }">
-          <v-btn
-            v-bind="props"
-            size="30"
-            color="white"
-            style="margin-left: -10px"
-            icon
-            @click="props.onClick"
-          >
-            <v-icon :color="lightGray">
-              mdi-arrow-left-drop-circle-outline
-            </v-icon>
-          </v-btn>
-        </template>
-        <template v-slot:next="{ props }">
-          <v-btn
-            v-bind="props"
-            size="30"
-            color="white"
-            style="margin-right: -10px"
-            icon
-            @click="props.onClick"
-          >
-            <v-icon :color="lightGray">
-              mdi-arrow-right-drop-circle-outline
-            </v-icon>
-          </v-btn>
-        </template>
-        <v-carousel-item
-          v-for="(slidePic, index) in project.pictures"
-          :key="index"
-          class="fill-height"
-        >
+    <v-card class="dialog-card">
+      <div class="header">
+        <div class="d-flex">
           <v-img
-            class="project-picture"
-            :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
-            :src="require(`@/assets/${slidePic}`)"
-            :lazy-src="require(`@/assets/${slidePic}`)"
-            @click="openImgDialog"
-            @load="isImageLoading = false"
-          >
-            <template v-slot:placeholder>
-              <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-              >
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-carousel-item>
-      </v-carousel>
-      <v-img
-        v-else
-        class="project-picture"
-        style="cursor: pointer"
-        :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
-        :src="require(`@/assets/${project.pictures[0]}`)"
-        :lazy-src="require(`@/assets/${project.pictures[0]}`)"
-        @click="openImgDialog"
-        @load="isImageLoading = false"
-      >
-        <template v-slot:placeholder>
-          <v-row
-            class="fill-height ma-0"
-            align="center"
-            justify="center"
-          >
-            <v-progress-circular
-              indeterminate
-              color="grey lighten-5"
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
-
-      <div class="mt-9 d-flex justify-center">
+            v-if="project.icon"
+            :style="`max-width: ${project.iconSize}`"
+            :src="require(`@/assets/${project.icon}`)"
+            class="mr-2"
+          ></v-img>
+          <h3>{{ project.name }}</h3>
+        </div>
         <v-btn
-          v-for="(btn, index) in buttons"
-          :key="index"
-          variant="elevated"
-          elevation="4"
-          rounded
-          :size="$vuetify.display.xs ? 'default' : 'large'"
-          prepend-icon="mdi-github"
-          class="mr-4 text-white"
-          :class="{ 'custom-btn-hover': $vuetify.display.mdAndUp }"
-          :color="lightGray"
-          @click="routeToLink(project[btn.linkKey])"
-          @mousemove="handleMouseMove_Small"
-          @mouseleave="handleMouseLeave"
-        >
-          {{ btn.title }}
-        </v-btn>
+          icon="mdi-close"
+          variant="text"
+          class="close-btn"
+          @click="closeDialog"
+        ></v-btn>
       </div>
-    </div>
-    <v-dialog
-      v-model="isImgDialogOpen"
-      width="900"
-    >
-      <v-carousel
-        v-if="project.pictures.length !== 1"
-        v-model="carouselIndex"
-        cycle
-        height="420"
-        hide-delimiters
-        show-arrows="hover"
-        style="box-shadow: 5px 4px 9px"
-      >
-        <template v-slot:prev="{ props }">
-          <v-btn
-            v-bind="props"
-            size="30"
-            color="white"
-            style="margin-left: -10px"
-            icon
-            @click="props.onClick"
-          >
-            <v-icon :color="lightGray">
-              mdi-arrow-left-drop-circle-outline
-            </v-icon>
-          </v-btn>
-        </template>
-        <template v-slot:next="{ props }">
-          <v-btn
-            v-bind="props"
-            size="30"
-            color="white"
-            style="margin-right: -10px"
-            icon
-            @click="props.onClick"
-          >
-            <v-icon :color="lightGray">
-              mdi-arrow-right-drop-circle-outline
-            </v-icon>
-          </v-btn>
-        </template>
-        <v-carousel-item
-          v-for="(slidePic, index) in project.pictures"
-          :key="index"
-          class="fill-height"
-        >
-          <v-img
-            class="project-picture"
-            style="cursor: zoom-out"
-            :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''
-              "
-            :src="require(`@/assets/${slidePic}`)"
-            :lazy-src="require(`@/assets/${slidePic}`)"
-            @click="openImgDialog"
-            @load="isImageLoading = false"
-          >
-            <template v-slot:placeholder>
-              <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
+      <div class="content" :class="{'flex-column': $vuetify.display.smAndDown}">
+        <div class="description" :class="{'w-100': $vuetify.display.smAndDown}">
+          <div class="d-flex" style="justify-content: space-between">
+            <h3>Description:</h3>
+            <p class="duration">{{ project.duration }}</p>
+          </div>
+          <p>{{ project.description }}</p>
+          <h3 class="mt-4">What did I do?</h3>
+          <p>{{ project.responsibilites }}</p>
+          <h3 class="mt-4">External Links:</h3>
+          <div class="d-flex flex-column">
+            <a
+              class="my-cursor-hover"
+              v-if="project.projectLink"
+              target="_blank"
+              :href="project.projectLink"
+            >Project URL</a>
+            <a
+              v-else
+              class="my-cursor-hover disabled"
+              href=""
+              @click.prevent
+            >Project
+              URL (Not Available)</a>
+            <a
+              class="my-cursor-hover"
+              v-if="project.githubLink"
+              target="_blank"
+              :href="project.githubLink"
+            >Github Link</a>
+            <a
+              v-else
+              class="my-cursor-hover disabled"
+              href=""
+              @click.prevent
+            >Github
+              URL (Private Repo)</a>
+          </div>
+          <h3 class="mt-4">Technology Stack:</h3>
+          <div class="tech-stack">
+            <v-img :src="require('@/assets/svg-icons/nodejs.svg')" />
+            <v-img :src="require('@/assets/svg-icons/vue.svg')" />
+            <v-img :src="require('@/assets/svg-icons/js.svg')" />
+            <v-img :src="require('@/assets/svg-icons/expressjs.svg')" />
+          </div>
+        </div>
+        <div class="right-content" :class="{'w-100': $vuetify.display.smAndDown}">
+          <p v-if="$vuetify.display.mdAndUp" class="duration">{{ project.duration }}</p>
+          <div class="images">
+            <v-carousel
+              v-if="project.pictures.length !== 1"
+              v-model="carouselIndex"
+              cycle
+              :height="$vuetify.display.xs ? '164' : '260'"
+              hide-delimiters
+              :show-arrows="$vuetify.display.smAndDown || 'hover'"
+            >
+              <template v-slot:prev="{ props }">
+                <v-btn
+                  v-bind="props"
+                  size="30"
+                  color="white"
+                  style="margin-left: -10px"
+                  icon
+                  @click="props.onClick"
+                >
+                  <v-icon :color="lightGray">
+                    mdi-arrow-left-drop-circle-outline
+                  </v-icon>
+                </v-btn>
+              </template>
+              <template v-slot:next="{ props }">
+                <v-btn
+                  v-bind="props"
+                  size="30"
+                  color="white"
+                  style="margin-right: -10px"
+                  icon
+                  @click="props.onClick"
+                >
+                  <v-icon :color="lightGray">
+                    mdi-arrow-right-drop-circle-outline
+                  </v-icon>
+                </v-btn>
+              </template>
+              <v-carousel-item
+                v-for="(slidePic, index) in project.pictures"
+                :key="index"
+                class="fill-height"
               >
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-carousel-item>
-      </v-carousel>
-      <v-img
-        v-else
-        class="project-picture"
-        style="cursor: pointer"
-        :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
-        :src="require(`@/assets/${project.pictures[0]}`)"
-        :lazy-src="require(`@/assets/${project.pictures[0]}`)"
-        @click="openImgDialog"
-        @load="isImageLoading = false"
-      >
-        <template v-slot:placeholder>
-          <v-row
-            class="fill-height ma-0"
-            align="center"
-            justify="center"
-          >
-            <v-progress-circular
-              indeterminate
-              color="grey lighten-5"
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
-    </v-dialog>
-  </v-col>
+                <v-img
+                  class="project-picture"
+                  :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
+                  :src="require(`@/assets/${slidePic}`)"
+                  :lazy-src="require(`@/assets/${slidePic}`)"
+                  @load="isImageLoading = false"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-carousel-item>
+            </v-carousel>
+          </div>
+        </div>
+      </div>
+    </v-card>
+
+  </v-dialog>
 </template>
 
 <script>
@@ -270,15 +180,12 @@ export default {
   },
   data() {
     return {
-      isImgDialogOpen: false,
       isImageLoading: true,
       carouselIndex: 0,
     };
   },
+  emits: ['closeDialog'],
   computed: {
-    projectImageHeight() {
-      return this.$vuetify.display.xs ? '164' : '260';
-    },
     buttons() {
       let btns = [
         {
@@ -294,33 +201,153 @@ export default {
     },
   },
   methods: {
-    openImgDialog() {
-      if (this.$vuetify.display.mdAndUp) {
-        this.isImgDialogOpen = !this.isImgDialogOpen;
-      }
+    closeDialog() {
+      this.$emit('closeDialog', this.project);
     },
   },
 };
 </script>
 
-<style scoped>
-.project-item {
-  font-family: 'Roboto Condensed', sans-serif;
-  /* color: #473a3a; */
-}
-
-.v-btn {
-  height: 50px;
-  border-radius: 30px;
-  padding-inline: 23px;
-}
-
+<style lang="scss" scoped>
 .project-picture {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  /* border: 1px solid #7a7a7a; */
-  box-shadow: 5px 4px 9px;
-  cursor: zoom-in;
+  box-shadow: 5px 4px 9px #222;
+}
+
+.main-content {
+  display: block;
+  width: 100%;
+  transition: transform 0.5s;
+}
+
+.overlay-content {
+  width: 100%;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(transparent, #222 58%);
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0 40px;
+  transition: height 0.5s;
+}
+
+.project-dialog {
+  width: 70vw;
+
+  .dialog-card {
+    background-color: #353535;
+    border-radius: 16px !important;
+  }
+
+  .header {
+    background-color: #222;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      color: #d5a880 !important;
+    }
+
+    button {
+      i {
+        color: #d5a880;
+        font-size: larger;
+      }
+    }
+  }
+
+  .content {
+    padding: 20px;
+    display: flex;
+    text-align: justify;
+    gap: 1rem;
+    font-size: 14px;
+
+    .description {
+      width: 50%;
+
+      p {
+        line-height: 1.2rem;
+        margin-top: 4px;
+      }
+
+      .duration {
+        text-align: end;
+        color: #d5a880;
+        font-weight: bold;
+      }
+
+      a {
+        color: #d5a880;
+        text-transform: uppercase;
+        width: fit-content;
+      }
+
+      a.disabled {
+        color: #d5a88070;
+      }
+
+      .tech-stack {
+        display: flex;
+        justify-content: center;
+
+        .v-img {
+          max-width: 30px;
+          margin-inline: 4px;
+        }
+      }
+    }
+
+    .right-content {
+      width: 50%;
+
+      .duration {
+        text-align: end;
+        color: #d5a880;
+        font-weight: bold;
+      }
+    }
+
+    .images {
+      width: 100%;
+      height: 90%;
+      display: flex;
+      align-items: center;
+
+      .v-window {
+        box-shadow: 5px 4px 9px black;
+        border-radius: 8px;
+        cursor: inherit !important;
+
+        .v-window__container {
+          cursor: inherit !important;
+
+          .v-carousel-item {
+            cursor: inherit !important;
+          }
+
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+  }
+}
+
+.close-btn:hover {
+  transition: transform 0.5s;
+  transform: rotate(90deg);
 }
 </style>

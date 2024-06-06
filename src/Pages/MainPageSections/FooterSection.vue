@@ -2,10 +2,10 @@
   <v-row
     justify="center"
     class="ma-0 footer-section text-gray"
-    :class="{ 'tab-screen-footer': $vuetify.display.sm }"
+    :class="{ 'tab-view': $vuetify.display.sm }"
     :style="$vuetify.display.mdAndUp
-        ? 'border-radius: 50px 50px 0 0;'
-        : 'border-radius: 30px 30px 0 0;'
+      ? 'border-radius: 50px 50px 0 0;'
+      : 'border-radius: 30px 30px 0 0;'
       "
   >
     <v-col
@@ -13,15 +13,15 @@
       md="8"
       sm="10"
       :class="{ 'px-6': $vuetify.display.smAndDown }"
-      style="animation: fadeUp 0.5s ease-in-out"
     >
       <div
         ref="animatedDiv"
         class="fading-col"
       >
+      <!-- style="animation: fadeUp 0.5s ease-in-out" -->
         <v-row
+          id="footer-content"
           class="d-flex"
-          style="animation: fadeUp 0.5s ease-in-out"
         >
           <v-col
             cols="11"
@@ -33,7 +33,7 @@
           >
             <span class="text-white">
               <v-avatar
-                :image="require('@/assets/Avatar.jpg')"
+                :image="require('@/assets/avatar-2.png')"
                 size="64"
                 class="mr-2"
               />
@@ -49,8 +49,8 @@
             sm="3"
             class="d-flex"
             :class="$vuetify.display.xs || $vuetify.display.mdAndUp
-                ? 'align-end pa-0 mb-10'
-                : 'align-center justify-end'
+              ? 'align-end pa-0 mb-10'
+              : 'align-center justify-end'
               "
           >
             <v-icon
@@ -93,8 +93,8 @@
             class="d-flex align-center move-left"
             :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
             :style="$vuetify.display.xs
-                ? { flexDirection: 'column' }
-                : { flexDirection: 'row' }
+              ? { flexDirection: 'column' }
+              : { flexDirection: 'row' }
               "
           >
             <v-btn
@@ -142,6 +142,7 @@
               +92 36 2474916
             </v-btn>
           </v-col>
+
           <v-col
             v-else
             cols="12"
@@ -153,6 +154,7 @@
               @onClose="feedbackFormClosed"
             />
           </v-col>
+
           <v-col
             cols="12"
             class="text-center mt-16 pb-0"
@@ -193,8 +195,8 @@
       </span>
       <div
         :style="$vuetify.display.xs
-            ? { width: '100%' }
-            : { width: '50%', justifyContent: 'end' }
+          ? { width: '100%' }
+          : { width: '50%', justifyContent: 'end' }
           "
         class="d-flex"
       >
@@ -208,6 +210,7 @@
 </template>
 
 <script>
+import {gsap} from 'gsap';
 import FeedbackForm from "../../components/FeedbackForm.vue";
 import SocialComponent from "../../components/SocialComponent.vue";
 
@@ -250,6 +253,20 @@ export default {
     feedbackFormClosed() {
       this.toggleFeedackForm = false;
     },
+    addAnimationToFooter() {
+      gsap.fromTo(
+        '#footer-content',
+        {
+          y: -200,
+          opacity: 0,
+        }, {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: 'power1.out',
+        }
+      );
+    },
   },
   mounted() {
     const options = {
@@ -260,6 +277,7 @@ export default {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          this.addAnimationToFooter();
           entry.target.classList.add("visible");
         } else {
           entry.target.classList.remove("visible");
@@ -279,24 +297,26 @@ $darkGray: #1c1d20;
 
 .footer-section {
   background-color: $darkGray;
-  box-shadow: 1px 1px 100px;
+  box-shadow: 1px 1px 30px #353535;
   z-index: 1;
   padding-top: 100px;
+  
+  h3 {
+    font-family: "Roboto Condensed", sans-serif;
+  }
 }
-
-.tab-screen-footer {
+.footer-section.tab-view {
   padding-top: 140px;
 }
 
-.footer-section h3 {
-  font-family: "Roboto Condensed", sans-serif;
-}
 
 .btn-get-in-touch {
   background-color: $lightGray;
   padding: 20px;
   height: 190px;
   width: 190px;
+  min-height: 190px;
+  min-width: 190px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
