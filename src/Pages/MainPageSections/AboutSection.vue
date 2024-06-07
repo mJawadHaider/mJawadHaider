@@ -21,7 +21,8 @@
         cols="12"
         md="5"
         sm="12"
-        class="d-flex flex-column pa-0 mt-4"
+        class="d-flex flex-column pa-0"
+        :class="{ 'mt-4': $vuetify.display.xs }"
         style="gap: 0.7rem;"
       >
         <div
@@ -35,6 +36,7 @@
             Experience
           </h1>
           <div
+            v-if="experience.length > 0"
             v-for="(item, index) in experience"
             :key="index"
             class="mb-6"
@@ -60,15 +62,20 @@
               class="my-4 seperator"
             ></div>
           </div>
+          <v-skeleton-loader
+            v-else
+            color="#ffffff00"
+            boilerplate
+            type="article"
+          />
         </div>
-
-
         <div
           class="education-wrapper my-card"
           variant="tonal"
         >
           <h1 :style="{ color: darkGray, fontSize: '34px' }">Education</h1>
           <div
+            v-if="education.length > 0"
             v-for="(item, index) in education"
             :key="index"
           >
@@ -97,6 +104,12 @@
               class="my-6 seperator"
             ></div>
           </div>
+          <v-skeleton-loader
+            v-else
+            color="#ffffff00"
+            boilerplate
+            type="article"
+          />
         </div>
       </v-col>
       <!-- Skills -->
@@ -108,6 +121,7 @@
       >
         <h1 :style="{ color: darkGray, fontSize: '34px' }">Skills</h1>
         <v-row
+          v-if="skillSet.length > 0"
           v-for="(item, index) in skillSet"
           :key="index"
           class="d-flex align-center justify-center"
@@ -138,35 +152,13 @@
             />
           </v-col>
         </v-row>
+        <v-skeleton-loader
+          v-else
+          color="#ffffff00"
+          boilerplate
+          type="article"
+        />
       </v-col>
-
-      <!-- Download Resume -->
-      <!-- <v-col
-        cols="12"
-        md="10"
-        sm="12"
-        :class="$vuetify.display.smAndDown ? 'mt-13' : 'py-0'"
-        class="d-flex justify-end mt-5"
-      >
-        <v-btn
-          class="text-white download-btn"
-          :color="lightGray"
-          rounded
-          prepend-icon="mdi-open-in-new"
-          variant="elevated"
-          size="large"
-          elevation="4"
-          @click="
-            routeToLink(
-              'https://drive.google.com/file/d/1bYa9GKe-I1iEGI4IBgFlz0CGq30oH1EP/view?usp=sharing'
-            )
-            "
-          @mousemove="handleMouseMove_Small"
-          @mouseleave="handleMouseLeave"
-        >
-          DOWNLOAD RESUME
-        </v-btn>
-      </v-col> -->
     </v-row>
   </div>
 </template>
@@ -174,60 +166,17 @@
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
 import { gsap } from 'gsap';
+import { fetchExperience, fetchEducation, fetchSkills } from '@/utils/fetchData';
 
 export default {
   data() {
     return {
-      education: [
-        {
-          degree: 'Bachelor of Sciences in Computer Science (BSCS)',
-          institute:
-            'Univeristy of Engineering and Technology, Lahore',
-          duration: '2021 - 2025',
-        },
-        {
-          degree: 'Intermediate in Computer Science (ICS)',
-          institute: 'Punjab Group of Colleges, Lahore',
-          duration: '2019 - 2021',
-        },
-      ],
-      experience: [
-        {
-          position: 'Software Engineer Intern',
-          company: 'House Of Tech',
-          duration: '2022 - current',
-        },
-      ],
-      skillSet: [
-        {
-          name: 'JavaScript (Vue)',
-          skillPower: 80,
-        },
-        {
-          name: 'Node.js',
-          skillPower: 50,
-        },
-        {
-          name: 'Sequelize.js',
-          skillPower: 65,
-        },
-        {
-          name: 'C++ / C#',
-          skillPower: 90,
-        },
-        {
-          name: 'HTML',
-          skillPower: 90,
-        },
-        {
-          name: 'CSS',
-          skillPower: 60,
-        },
-        {
-          name: 'Git / Github',
-          skillPower: 90,
-        },
-      ],
+      experience: [],
+      education: [],
+      skillSet: [],
+      fetchExperience,
+      fetchEducation,
+      fetchSkills,
     };
   },
   components: {
@@ -292,8 +241,11 @@ export default {
       })
     },
   },
-  mounted() {
+  async mounted() {
     this.addScrollAnimation();
+    this.experience = await this.fetchExperience();
+    this.education = await this.fetchEducation();
+    this.skillSet = await this.fetchSkills();
   },
 };
 </script>

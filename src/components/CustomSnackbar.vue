@@ -1,5 +1,6 @@
 <template>
   <v-snackbar
+    id="custom-snackbar"
     v-model="toggleSnackbar"
     location="right bottom"
     min-width="6"
@@ -30,13 +31,12 @@
 </template>
 
 <script>
+import { gsap } from 'gsap';
+
 export default {
   props: {
     isSnackBarDisabled: Boolean,
     snackbarVisible: Boolean,
-  },
-  data() {
-    return {}
   },
   computed: {
     toggleSnackbar: {
@@ -56,7 +56,30 @@ export default {
       this.activeTab = 0;
     },
   },
+  mounted() {
+    gsap.fromTo('#custom-snackbar', {
+      opacity: 0,
+      scale: 0.5,
+      y: 400,
+      x: 500,
+    }, {
+      y: 0,
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.6,
+      ease: 'back.out',
+    })
+  },
 }
 </script>
 
-<style></style>
+<style scoped>
+.custom-btn-hover {
+  transition: transform 0.5s;
+}
+
+.custom-btn-hover:hover {
+  transform: rotate(360deg);
+}
+</style>

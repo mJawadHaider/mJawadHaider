@@ -5,6 +5,7 @@
     <project-section id="projectSectionId" />
     <footer-section id="footerSectionId" />
     <custom-snackbar
+      v-if="snackbarVisible"
       :snackbarVisible="snackbarVisible"
       :isSnackBarDisabled="isSnackBarDisabled"
     />

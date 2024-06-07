@@ -2,8 +2,8 @@
   <div class="main-content">
     <v-img
       style="border-radius: 12px"
-      :src="require(`@/assets/${project.pictures[0]}`)"
-      :lazy-src="require(`@/assets/${project.pictures[0]}`)"
+      :src="handleImageFailure(project.pictures[0])"
+      :lazy-src="handleImageFailure(project.pictures[0])"
       @load="isImageLoading = false"
     >
       <template v-slot:placeholder>
@@ -34,9 +34,10 @@
           <v-img
             v-if="project.icon"
             :style="`max-width: ${project.iconSize}`"
-            :src="require(`@/assets/${project.icon}`)"
+            :src="handleImageFailure(project.icon)"
             class="mr-2"
-          ></v-img>
+          >
+          </v-img>
           <h3>{{ project.name }}</h3>
         </div>
         <v-btn
@@ -59,7 +60,11 @@
             style="justify-content: space-between"
           >
             <h3>Description:</h3>
-            <p class="duration">{{ project.duration }}</p>
+            <p
+              v-if="$vuetify.display.smAndDown"
+              class="duration"
+            >{{ project.duration
+              }}</p>
           </div>
           <p>{{ project.description }}</p>
           <h3 class="mt-4">What did I do?</h3>
@@ -95,10 +100,11 @@
           </div>
           <h3 class="mt-4">Technology Stack:</h3>
           <div class="tech-stack">
-            <v-img :src="require('@/assets/svg-icons/nodejs.svg')" />
-            <v-img :src="require('@/assets/svg-icons/vue.svg')" />
-            <v-img :src="require('@/assets/svg-icons/js.svg')" />
-            <v-img :src="require('@/assets/svg-icons/expressjs.svg')" />
+            <v-img
+              v-for="(iconName, idx) in project.techStack"
+              :key="idx"
+              :src="require(`@/assets/svg-icons/${getTechIcon(iconName)}`)"
+            />
           </div>
         </div>
         <div
@@ -155,8 +161,8 @@
                 <v-img
                   class="project-picture"
                   :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
-                  :src="require(`@/assets/${slidePic}`)"
-                  :lazy-src="require(`@/assets/${slidePic}`)"
+                  :src="handleImageFailure(slidePic)"
+                  :lazy-src="handleImageFailure(slidePic)"
                   @load="isImageLoading = false"
                 >
                   <template v-slot:placeholder>
@@ -219,6 +225,29 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('closeDialog', this.project);
+    },
+    getImageURL(imgId) {
+      return `https://drive.google.com/thumbnail?id=${imgId}`;
+    },
+    getTechIcon(name) {
+      const icons = {
+        'node': 'nodejs.svg',
+        'vue': 'vue.svg',
+        'js': 'js.svg',
+        'express': 'expressjs.svg',
+      };
+      if (!icons[name]) {
+        console.info('Icon name is incorrect');
+      }
+      return icons[name] || "no-image.png";
+    },
+    handleImageFailure(imgSrc) {
+      try {
+        const img = require(`@/assets/${imgSrc}`);
+        return img;
+      } catch (err) {
+        return require(`@/assets/no-image-2.jpg`);
+      }
     },
   },
 };

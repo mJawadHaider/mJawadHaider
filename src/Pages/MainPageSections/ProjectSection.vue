@@ -49,6 +49,7 @@
 import SectionHeader from '@/components/SectionHeader.vue';
 import ProjectItem from '@/components/ProjectItem.vue';
 import { gsap } from 'gsap';
+import { fetchProjects } from '@/utils/fetchData';
 
 export default {
   components: {
@@ -109,6 +110,7 @@ export default {
           active: false,
         },
       ],
+      fetchProjects,
     };
   },
   computed: {},
@@ -145,12 +147,11 @@ export default {
       })
     },
   },
-  mounted() {
+  async mounted() {
     const options = {
       rootMargin: '0px',
       threshold: 0.5,
     };
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -161,8 +162,9 @@ export default {
       });
     }, options);
 
-    this.addAnimationToProjectCards();
     observer.observe(this.$refs.projectAnimation);
+    this.addAnimationToProjectCards();
+    this.projects = await this.fetchProjects();
   },
 };
 </script>
