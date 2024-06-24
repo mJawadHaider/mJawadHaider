@@ -160,7 +160,6 @@
               >
                 <v-img
                   class="project-picture"
-                  :style="$vuetify.display.mdAndUp ? 'min-width: 550px' : ''"
                   :src="handleImageFailure(slidePic)"
                   :lazy-src="handleImageFailure(slidePic)"
                   @load="isImageLoading = false"
@@ -234,7 +233,9 @@ export default {
         'node': 'nodejs.svg',
         'vue': 'vue.svg',
         'js': 'js.svg',
+        'react': 'react.svg',
         'express': 'expressjs.svg',
+        'mongodb': 'mongodb.svg',
       };
       if (!icons[name]) {
         console.info('Icon name is incorrect');
@@ -348,6 +349,7 @@ export default {
 
         .v-img {
           max-width: 30px;
+          max-height: 30px;
           margin-inline: 4px;
         }
       }
@@ -391,8 +393,18 @@ export default {
   }
 }
 
+@media (max-width: 1100px) {
+  .content {
+    flex-direction: column;
+  }
+  .description,
+  .right-content {
+    width: 100% !important;
+  }
+}
+
 .close-btn:hover {
   transition: transform 0.5s;
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 </style>

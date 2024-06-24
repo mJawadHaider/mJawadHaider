@@ -87,9 +87,9 @@
           </v-col>
 
           <v-col
-            v-if="!toggleFeedackForm"
             cols="12"
-            class="d-flex align-center move-left"
+            id="contact-email-phone"
+            class="d-flex align-center"
             :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
             :style="$vuetify.display.xs
               ? { flexDirection: 'column' }
@@ -143,10 +143,10 @@
           </v-col>
 
           <v-col
-            v-else
             cols="12"
-            class="move-left"
+            id="animate-feedback"
             :class="$vuetify.display.smAndDown ? 'pt-16' : 'py-0'"
+            :style="toggleFeedackForm ? { display: 'flex' } : { display: 'none' }"
           >
             <feedback-form
               id="feedback-form"
@@ -235,22 +235,60 @@ export default {
       this.$toast.info("Copied to clipboard!!");
     },
     getInTouch() {
-      this.toggleFeedackForm = !this.toggleFeedackForm;
-
-      setTimeout(() => {
-        const form = document.getElementById("feedback-form");
-        if (!form) return;
-
-        form.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
+      if (!this.toggleFeedackForm) {
+        this.toggleFeedackForm = !this.toggleFeedackForm;
+        gsap.to('#contact-email-phone', {
+          x: 2000,
+          ease: 'power3.inOut',
+          duration: 0.4,
         });
-      }, 350);
+        gsap.fromTo('#animate-feedback', {
+          x: -2000,
+          opacity: 0,
+        }, {
+          x: 0,
+          delay: 0.3,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power3.inOut',
+        });
 
-      clearTimeout();
+        setTimeout(() => {
+          const form = document.getElementById("feedback-form");
+          if (!form) return;
+
+          form.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }, 350);
+
+        clearTimeout();
+      } else {
+        this.feedbackFormClosed();
+      }
     },
     feedbackFormClosed() {
-      this.toggleFeedackForm = false;
+      gsap.to('#animate-feedback', {
+        x: 2000,
+        ease: 'power3.inOut',
+        duration: 0.4,
+      });
+      gsap.fromTo('#contact-email-phone', {
+        x: -2000,
+        opacity: 0,
+      }, {
+        x: 0,
+        delay: 0.3,
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power3.inOut',
+      });
+      setTimeout(() => {
+        this.toggleFeedackForm = false;
+      }, 400);
+
+      clearTimeout();
     },
     addAnimationToFooter() {
       gsap.fromTo(

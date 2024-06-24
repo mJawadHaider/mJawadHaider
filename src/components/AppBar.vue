@@ -86,7 +86,6 @@
       </div>
     </v-navigation-drawer>
     <v-app-bar
-      v-if="!isFooterVisible"
       id="appBar"
       class="pt-2 px-6 font-18 app-bar"
       app
